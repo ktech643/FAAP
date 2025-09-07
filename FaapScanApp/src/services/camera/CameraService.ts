@@ -3,8 +3,9 @@
  * Handles camera initialization, permissions, and error recovery
  */
 
-import { Alert, Linking, Platform } from 'react-native';
+import { Alert, Linking, Platform, DeviceEventEmitter } from 'react-native';
 import { check, request, PERMISSIONS, RESULTS, PermissionStatus } from 'react-native-permissions';
+import { Camera2ApiHandler } from './Camera2ApiHandler';
 
 export interface CameraPermissionResult {
   granted: boolean;
@@ -23,6 +24,10 @@ export class CameraService {
   private static instance: CameraService;
   private isInitialized: boolean = false;
   private currentConfig: CameraConfig;
+  private camera2Handler: Camera2ApiHandler;
+  private activeSession: any = null;
+  private retryCount: number = 0;
+  private maxRetries: number = 3;
 
   private constructor() {
     this.currentConfig = {
@@ -31,6 +36,9 @@ export class CameraService {
       focusMode: 'auto',
       whiteBalance: 'auto',
     };
+    
+    this.camera2Handler = Camera2ApiHandler.getInstance();
+    this.setupEventListeners();
   }
 
   public static getInstance(): CameraService {
@@ -38,6 +46,65 @@ export class CameraService {
       CameraService.instance = new CameraService();
     }
     return CameraService.instance;
+  }
+
+  /**
+   * Setup event listeners for Camera2 API events
+   */
+  private setupEventListeners(): void {
+    DeviceEventEmitter.addListener('CameraRetryRequested', () => {
+      this.handleRetryRequest();
+    });
+
+    DeviceEventEmitter.addListener('CameraRestartRequested', () => {
+      this.handleRestartRequest();
+    });
+
+    DeviceEventEmitter.addListener('CameraFallbackRequested', () => {
+      this.handleFallbackRequest();
+    });
+  }
+
+  /**
+   * Handle retry requests from Camera2 handler
+   */
+  private async handleRetryRequest(): Promise<void> {
+    if (this.retryCount < this.maxRetries) {
+      this.retryCount++;
+      console.log(`Camera Service: Retry attempt ${this.retryCount}/${this.maxRetries}`);
+      
+      try {
+        await this.releaseCamera();
+        await new Promise(resolve => setTimeout(resolve, 1000)); // Wait before retry
+        await this.initializeCamera();
+      } catch (error) {
+        console.error('Camera Service: Retry failed:', error);
+      }
+    } else {
+      console.log('Camera Service: Max retries reached, enabling fallback mode');
+      this.handleFallbackRequest();
+    }
+  }
+
+  /**
+   * Handle restart requests
+   */
+  private async handleRestartRequest(): Promise<void> {
+    console.log('Camera Service: Restarting camera session');
+    this.retryCount = 0; // Reset retry count
+    await this.releaseCamera();
+    await new Promise(resolve => setTimeout(resolve, 2000)); // Longer wait for restart
+    await this.initializeCamera();
+  }
+
+  /**
+   * Handle fallback requests
+   */
+  private handleFallbackRequest(): void {
+    console.log('Camera Service: Enabling fallback mode');
+    this.isInitialized = false;
+    // Emit event for UI to handle fallback mode
+    DeviceEventEmitter.emit('CameraFallbackMode', { enabled: true });
   }
 
   /**
@@ -135,23 +202,62 @@ export class CameraService {
   }
 
   /**
-   * Handle camera errors with recovery strategies
+   * Handle camera errors with Camera2 API analysis
    */
   public handleCameraError(error: any): void {
     console.error('Camera error:', error);
     
-    let errorMessage = 'An unknown camera error occurred.';
+    // Use Camera2 API handler to analyze the error
+    const analyzedError = this.camera2Handler.analyzeCameraError(error);
+    
+    console.log('Camera error analysis:', analyzedError);
+    
+    // Handle based on analysis
+    switch (analyzedError.suggestedAction) {
+      case 'ignore':
+        // Don't show user dialog for non-critical errors
+        console.log('Camera Service: Ignoring non-critical error:', analyzedError.message);
+        return;
+        
+      case 'retry':
+        if (this.retryCount < this.maxRetries) {
+          console.log('Camera Service: Scheduling retry for recoverable error');
+          this.handleRetryRequest();
+          return;
+        }
+        break;
+        
+      case 'restart':
+        console.log('Camera Service: Scheduling restart for device error');
+        this.handleRestartRequest();
+        return;
+        
+      case 'fallback':
+        console.log('Camera Service: Enabling fallback mode for unrecoverable error');
+        this.handleFallbackRequest();
+        return;
+    }
+    
+    // Show user dialog only for errors that need user intervention
+    this.showUserErrorDialog(analyzedError);
+  }
+
+  /**
+   * Show error dialog to user
+   */
+  private showUserErrorDialog(analyzedError: any): void {
+    let errorMessage = analyzedError.message || 'An unknown camera error occurred.';
     let recoveryAction = 'Try Again';
     
-    if (error?.message?.includes('CAMERA_ERROR')) {
-      errorMessage = 'Camera device error. Please restart the app or try using a different camera.';
-      recoveryAction = 'Restart App';
-    } else if (error?.message?.includes('Function not implemented')) {
-      errorMessage = 'Camera function not supported on this device. Some features may be limited.';
-      recoveryAction = 'Continue';
-    } else if (error?.message?.includes('Access denied')) {
+    if (analyzedError.code === 1) {
       errorMessage = 'Camera access denied. Please check app permissions.';
       recoveryAction = 'Open Settings';
+    } else if (analyzedError.code === 4) {
+      errorMessage = 'Camera is busy. Please close other camera apps and try again.';
+      recoveryAction = 'Try Again';
+    } else if (analyzedError.code === 3) {
+      errorMessage = 'Camera device error. Please restart the app.';
+      recoveryAction = 'Restart App';
     }
 
     Alert.alert(
@@ -211,11 +317,22 @@ export class CameraService {
   }
 
   /**
-   * Release camera resources
+   * Release camera resources with proper Camera2 cleanup
    */
-  public releaseCamera(): void {
+  public async releaseCamera(): Promise<void> {
     this.isInitialized = false;
-    // In a real implementation, you would release camera resources here
+    
+    if (this.activeSession) {
+      try {
+        // Use Camera2 handler for safe cleanup
+        await this.camera2Handler.safeCloseSession(this.activeSession);
+        this.activeSession = null;
+      } catch (error) {
+        console.log('Camera Service: Cleanup error (non-critical):', error);
+        // Don't throw - cleanup errors are often expected on some devices
+      }
+    }
+    
     console.log('Camera resources released');
   }
 

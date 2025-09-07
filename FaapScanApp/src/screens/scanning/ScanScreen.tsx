@@ -13,6 +13,7 @@ import {
   Vibration,
   Alert,
   AppState,
+  DeviceEventEmitter,
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Colors } from '../../constants/colors';
@@ -36,6 +37,7 @@ const ScanScreen: React.FC<Props> = ({ navigation }) => {
   const [flashOn, setFlashOn] = useState(false);
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [cameraError, setCameraError] = useState<string | null>(null);
+  const [fallbackMode, setFallbackMode] = useState<boolean>(false);
   
   // Animation refs
   const scanLineAnim = useRef(new Animated.Value(0)).current;
@@ -65,8 +67,18 @@ const ScanScreen: React.FC<Props> = ({ navigation }) => {
 
     const subscription = AppState.addEventListener('change', handleAppStateChange);
     
+    // Listen for fallback mode events
+    const fallbackListener = DeviceEventEmitter.addListener('CameraFallbackMode', (data) => {
+      setFallbackMode(data.enabled);
+      if (data.enabled) {
+        setIsScanning(false);
+        setCameraError('Camera unavailable - using manual entry mode');
+      }
+    });
+    
     return () => {
       subscription?.remove();
+      fallbackListener?.remove();
       cameraService.releaseCamera();
     };
   }, []);
@@ -391,11 +403,18 @@ const ScanScreen: React.FC<Props> = ({ navigation }) => {
               <Body style={styles.instructionText}>
                 {isProcessing
                   ? 'Processing barcode...'
+                  : fallbackMode
+                  ? 'Camera unavailable - use manual entry below'
                   : 'Position barcode within the frame'}
               </Body>
-              {!isProcessing && (
+              {!isProcessing && !fallbackMode && (
                 <Caption color="secondary" style={styles.instructionSubtext}>
                   Hold steady for automatic scanning
+                </Caption>
+              )}
+              {fallbackMode && (
+                <Caption color="warning" style={styles.instructionSubtext}>
+                  Camera has issues - manual entry available
                 </Caption>
               )}
             </View>
@@ -410,9 +429,9 @@ const ScanScreen: React.FC<Props> = ({ navigation }) => {
               </TouchableOpacity>
 
               <Button
-                title={isProcessing ? 'Processing...' : 'Manual Scan'}
+                title={isProcessing ? 'Processing...' : fallbackMode ? 'Enter Barcode' : 'Manual Scan'}
                 onPress={handleManualScan}
-                variant="primary"
+                variant={fallbackMode ? 'secondary' : 'primary'}
                 disabled={isProcessing}
                 loading={isProcessing}
                 style={styles.manualScanButton}
