@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAAP Scan App - UI/UX Design System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Navigation -->
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <i class="fas fa-barcode brand-icon"></i>
+                <span class="brand-text">FAAP Scan</span>
+            </div>
+            <div class="nav-menu">
+                <button class="nav-item active" data-section="overview">Overview</button>
+                <button class="nav-item" data-section="flows">User Flows</button>
+                <button class="nav-item" data-section="components">Components</button>
+                <button class="nav-item" data-section="screens">Screens</button>
+                <button class="nav-item" data-section="interactions">Interactions</button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Overview Section -->
+            <section id="overview" class="content-section active">
+                <div class="section-header">
+                    <h1>FAAP Scan App - Advanced UI/UX Design System</h1>
+                    <p class="section-description">Comprehensive design architecture for food additive scanning application</p>
+                </div>
+
+                <div class="design-overview">
+                    <div class="overview-grid">
+                        <div class="overview-card primary">
+                            <div class="card-icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <h3>Mobile-First Design</h3>
+                            <p>Optimized for smartphones with progressive enhancement for tablets</p>
+                        </div>
+                        <div class="overview-card secondary">
+                            <div class="card-icon">
+                                <i class="fas fa-universal-access"></i>
+                            </div>
+                            <h3>Accessibility Focused</h3>
+                            <p>WCAG 2.1 AA compliant with inclusive design principles</p>
+                        </div>
+                        <div class="overview-card tertiary">
+                            <div class="card-icon">
+                                <i class="fas fa-palette"></i>
+                            </div>
+                            <h3>Design System</h3>
+                            <p>Comprehensive token-based system for consistency</p>
+                        </div>
+                        <div class="overview-card quaternary">
+                            <div class="card-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h3>Data-Driven UX</h3>
+                            <p>Analytics-informed design decisions and A/B testing</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Color System -->
+                <div class="design-section">
+                    <h2>Advanced Color System</h2>
+                    <div class="color-palette">
+                        <div class="color-group">
+                            <h3>Primary Colors</h3>
+                            <div class="color-row">
+                                <div class="color-swatch" style="background-color: #2E7D32;">
+                                    <span class="color-label">Primary Green</span>
+                                    <span class="color-value">#2E7D32</span>
+                                </div>
+                                <div class="color-swatch" style="background-color: #1976D2;">
+                                    <span class="color-label">Primary Blue</span>
+                                    <span class="color-value">#1976D2</span>
+                                </div>
+                                <div class="color-swatch" style="background-color: #D32F2F;">
+                                    <span class="color-label">Primary Red</span>
+                                    <span class="color-value">#D32F2F</span>
+                                </div>
+                                <div class="color-swatch" style="background-color: #FBC02D;">
+                                    <span class="color-label">Primary Yellow</span>
+                                    <span class="color-value">#FBC02D</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="color-group">
+                            <h3>Semantic Colors</h3>
+                            <div class="color-row">
+                                <div class="color-swatch success" style="background-color: #388E3C;">
+                                    <span class="color-label">Success</span>
+                                    <span class="color-value">#388E3C</span>
+                                </div>
+                                <div class="color-swatch warning" style="background-color: #F57C00;">
+                                    <span class="color-label">Warning</span>
+                                    <span class="color-value">#F57C00</span>
+                                </div>
+                                <div class="color-swatch error" style="background-color: #D32F2F;">
+                                    <span class="color-label">Error</span>
+                                    <span class="color-value">#D32F2F</span>
+                                </div>
+                                <div class="color-swatch info" style="background-color: #0288D1;">
+                                    <span class="color-label">Info</span>
+                                    <span class="color-value">#0288D1</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="color-group">
+                            <h3>Neutral Palette</h3>
+                            <div class="neutral-swatches">
+                                <div class="neutral-swatch" style="background-color: #FFFFFF; border: 1px solid #E0E0E0;">
+                                    <span>White</span>
+                                    <small>#FFFFFF</small>
+                                </div>
+                                <div class="neutral-swatch" style="background-color: #FAFAFA;">
+                                    <span>Gray 50</span>
+                                    <small>#FAFAFA</small>
+                                </div>
+                                <div class="neutral-swatch" style="background-color: #F5F5F5;">
+                                    <span>Gray 100</span>
+                                    <small>#F5F5F5</small>
+                                </div>
+                                <div class="neutral-swatch" style="background-color: #EEEEEE;">
+                                    <span>Gray 200</span>
+                                    <small>#EEEEEE</small>
+                                </div>
+                                <div class="neutral-swatch" style="background-color: #E0E0E0;">
+                                    <span>Gray 300</span>
+                                    <small>#E0E0E0</small>
+                                </div>
+                                <div class="neutral-swatch" style="background-color: #BDBDBD;">
+                                    <span>Gray 400</span>
+                                    <small>#BDBDBD</small>
+                                </div>
+                                <div class="neutral-swatch" style="background-color: #9E9E9E;">
+                                    <span>Gray 500</span>
+                                    <small>#9E9E9E</small>
+                                </div>
+                                <div class="neutral-swatch" style="background-color: #757575; color: white;">
+                                    <span>Gray 600</span>
+                                    <small>#757575</small>
+                                </div>
+                                <div class="neutral-swatch" style="background-color: #616161; color: white;">
+                                    <span>Gray 700</span>
+                                    <small>#616161</small>
+                                </div>
+                                <div class="neutral-swatch" style="background-color: #424242; color: white;">
+                                    <span>Gray 800</span>
+                                    <small>#424242</small>
+                                </div>
+                                <div class="neutral-swatch" style="background-color: #212121; color: white;">
+                                    <span>Gray 900</span>
+                                    <small>#212121</small>
+                                </div>
+                                <div class="neutral-swatch" style="background-color: #000000; color: white;">
+                                    <span>Black</span>
+                                    <small>#000000</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Typography System -->
+                <div class="design-section">
+                    <h2>Typography System</h2>
+                    <div class="typography-showcase">
+                        <div class="font-family-demo">
+                            <div class="primary-font">
+                                <h3>Primary Font: Inter</h3>
+                                <p class="font-sample">The quick brown fox jumps over the lazy dog</p>
+                                <p class="font-weights">Weights: 300, 400, 500, 600, 700</p>
+                            </div>
+                            <div class="secondary-font">
+                                <h3>Secondary Font: Roboto Mono</h3>
+                                <p class="font-sample mono">The quick brown fox jumps over the lazy dog</p>
+                                <p class="font-weights">Weights: 400, 500 (For data display)</p>
+                            </div>
+                        </div>
+
+                        <div class="typography-scale">
+                            <h3>Typography Scale</h3>
+                            <div class="type-samples">
+                                <div class="type-sample">
+                                    <h1 class="h1-sample">Heading 1 - 32px Bold</h1>
+                                    <span class="type-specs">32px / Bold / 1.2 line-height</span>
+                                </div>
+                                <div class="type-sample">
+                                    <h2 class="h2-sample">Heading 2 - 28px Bold</h2>
+                                    <span class="type-specs">28px / Bold / 1.2 line-height</span>
+                                </div>
+                                <div class="type-sample">
+                                    <h3 class="h3-sample">Heading 3 - 24px SemiBold</h3>
+                                    <span class="type-specs">24px / SemiBold / 1.3 line-height</span>
+                                </div>
+                                <div class="type-sample">
+                                    <h4 class="h4-sample">Heading 4 - 20px SemiBold</h4>
+                                    <span class="type-specs">20px / SemiBold / 1.3 line-height</span>
+                                </div>
+                                <div class="type-sample">
+                                    <h5 class="h5-sample">Heading 5 - 18px Medium</h5>
+                                    <span class="type-specs">18px / Medium / 1.4 line-height</span>
+                                </div>
+                                <div class="type-sample">
+                                    <p class="body-large-sample">Body Large - 16px Regular</p>
+                                    <span class="type-specs">16px / Regular / 1.5 line-height</span>
+                                </div>
+                                <div class="type-sample">
+                                    <p class="body-sample">Body - 14px Regular</p>
+                                    <span class="type-specs">14px / Regular / 1.5 line-height</span>
+                                </div>
+                                <div class="type-sample">
+                                    <p class="body-small-sample">Body Small - 12px Regular</p>
+                                    <span class="type-specs">12px / Regular / 1.4 line-height</span>
+                                </div>
+                                <div class="type-sample">
+                                    <p class="caption-sample">Caption - 10px Regular</p>
+                                    <span class="type-specs">10px / Regular / 1.3 line-height</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- User Flows Section -->
+            <section id="flows" class="content-section">
+                <div class="section-header">
+                    <h1>Comprehensive User Flow Architecture</h1>
+                    <p class="section-description">Interactive journey maps and flow diagrams</p>
+                </div>
+
+                <div class="flow-navigation">
+                    <button class="flow-nav-item active" data-flow="master">Master Journey</button>
+                    <button class="flow-nav-item" data-flow="onboarding">Onboarding</button>
+                    <button class="flow-nav-item" data-flow="scanning">Scanning Flow</button>
+                    <button class="flow-nav-item" data-flow="search">Search & Discovery</button>
+                    <button class="flow-nav-item" data-flow="health">Health Tracking</button>
+                </div>
+
+                <!-- Master Journey Flow -->
+                <div id="master-flow" class="flow-diagram active">
+                    <h2>Master User Journey Map</h2>
+                    <div class="journey-map">
+                        <div class="journey-stage" data-stage="discovery">
+                            <div class="stage-header">
+                                <h3>Discovery & Onboarding</h3>
+                                <span class="stage-duration">First Session</span>
+                            </div>
+                            <div class="stage-steps">
+                                <div class="step-item">
+                                    <div class="step-icon"><i class="fas fa-search"></i></div>
+                                    <span>App Store Discovery</span>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-icon"><i class="fas fa-download"></i></div>
+                                    <span>Download & Install</span>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-icon"><i class="fas fa-rocket"></i></div>
+                                    <span>First Launch</span>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-icon"><i class="fas fa-shield-alt"></i></div>
+                                    <span>Permissions Setup</span>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-icon"><i class="fas fa-user-cog"></i></div>
+                                    <span>Personalization Quiz</span>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-icon"><i class="fas fa-graduation-cap"></i></div>
+                                    <span>Educational Welcome</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="journey-stage" data-stage="core">
+                            <div class="stage-header">
+                                <h3>Core Scanning Experience</h3>
+                                <span class="stage-duration">Primary Use</span>
+                            </div>
+                            <div class="stage-steps">
+                                <div class="step-item">
+                                    <div class="step-icon"><i class="fas fa-home"></i></div>
+                                    <span>Home Dashboard</span>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-icon"><i class="fas fa-play-circle"></i></div>
+                                    <span>Scan Initiation</span>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-icon"><i class="fas fa-camera"></i></div>
+                                    <span>Camera Interface</span>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-icon"><i class="fas fa-barcode"></i></div>
+                                    <span>Barcode Recognition</span>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-icon"><i class="fas fa-database"></i></div>
+                                    <span>Product Database Query</span>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-icon"><i class="fas fa-microscope"></i></div>
+                                    <span>Ingredient Analysis</span>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                                    <span>Risk Assessment</span>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-icon"><i class="fas fa-chart-bar"></i></div>
+                                    <span>Results Display</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="journey-stage" data-stage="advanced">
+                            <div class="stage-header">
+                                <h3>Advanced Features</h3>
+                                <span class="stage-duration">Extended Use</span>
+                            </div>
+                            <div class="stage-steps">
+                                <div class="step-item">
+                                    <div class="step-icon"><i class="fas fa-search-plus"></i></div>
+                                    <span>Search & Browse</span>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-icon"><i class="fas fa-flask"></i></div>
+                                    <span>Additive Database</span>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-icon"><i class="fas fa-heartbeat"></i></div>
+                                    <span>Health Tracking</span>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-icon"><i class="fas fa-user-friends"></i></div>
+                                    <span>Community Features</span>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-icon"><i class="fas fa-lightbulb"></i></div>
+                                    <span>Personalized Recommendations</span>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-icon"><i class="fas fa-book-open"></i></div>
+                                    <span>Educational Content</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="journey-stage" data-stage="retention">
+                            <div class="stage-header">
+                                <h3>Retention & Engagement</h3>
+                                <span class="stage-duration">Ongoing</span>
+                            </div>
+                            <div class="stage-steps">
+                                <div class="step-item">
+                                    <div class="step-icon"><i class="fas fa-history"></i></div>
+                                    <span>Scan History</span>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-icon"><i class="fas fa-chart-line"></i></div>
+                                    <span>Progress Tracking</span>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-icon"><i class="fas fa-bell"></i></div>
+                                    <span>Notifications</span>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-icon"><i class="fas fa-share-alt"></i></div>
+                                    <span>Social Sharing</span>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-icon"><i class="fas fa-crown"></i></div>
+                                    <span>Premium Features</span>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-icon"><i class="fas fa-comment-dots"></i></div>
+                                    <span>Feedback Loop</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Onboarding Flow -->
+                <div id="onboarding-flow" class="flow-diagram">
+                    <h2>Onboarding Flow (5 Screens)</h2>
+                    <div class="onboarding-steps">
+                        <div class="onboarding-step active" data-step="1">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h3>Splash Screen</h3>
+                                <p>Brand Identity & Loading</p>
+                                <div class="step-details">
+                                    <ul>
+                                        <li>FAAP Scan logo animation</li>
+                                        <li>Health-focused messaging</li>
+                                        <li>App initialization</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="onboarding-step" data-step="2">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h3>Value Proposition</h3>
+                                <p>Health Benefits Overview</p>
+                                <div class="step-details">
+                                    <ul>
+                                        <li>Scan food products instantly</li>
+                                        <li>Identify harmful additives</li>
+                                        <li>Make healthier choices</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="onboarding-step" data-step="3">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h3>Permissions Request</h3>
+                                <p>Camera & Notifications</p>
+                                <div class="step-details">
+                                    <ul>
+                                        <li>Camera access for scanning</li>
+                                        <li>Notification permissions</li>
+                                        <li>Privacy explanation</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="onboarding-step" data-step="4">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h3>Health Profile Setup</h3>
+                                <p>Allergies & Preferences</p>
+                                <div class="step-details">
+                                    <ul>
+                                        <li>Dietary restrictions</li>
+                                        <li>Allergy information</li>
+                                        <li>Health goals</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="onboarding-step" data-step="5">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <h3>Quick Tutorial</h3>
+                                <p>Scan Demonstration</p>
+                                <div class="step-details">
+                                    <ul>
+                                        <li>Interactive scan demo</li>
+                                        <li>Results interpretation</li>
+                                        <li>Feature highlights</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="onboarding-controls">
+                        <button class="btn-secondary" id="onboarding-prev">Previous</button>
+                        <div class="onboarding-indicators">
+                            <span class="indicator active"></span>
+                            <span class="indicator"></span>
+                            <span class="indicator"></span>
+                            <span class="indicator"></span>
+                            <span class="indicator"></span>
+                        </div>
+                        <button class="btn-primary" id="onboarding-next">Next</button>
+                    </div>
+                </div>
+
+                <!-- Scanning Flow -->
+                <div id="scanning-flow" class="flow-diagram">
+                    <h2>Scanning Flow (7 Steps)</h2>
+                    <div class="scanning-flowchart">
+                        <div class="flow-node start-node">
+                            <div class="node-icon"><i class="fas fa-home"></i></div>
+                            <div class="node-content">
+                                <h4>Home Dashboard</h4>
+                                <p>Tap Scan Button</p>
+                            </div>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-node">
+                            <div class="node-icon"><i class="fas fa-camera"></i></div>
+                            <div class="node-content">
+                                <h4>Camera Interface</h4>
+                                <p>Live View Active</p>
+                            </div>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-node decision-node">
+                            <div class="node-icon"><i class="fas fa-question"></i></div>
+                            <div class="node-content">
+                                <h4>Barcode Detected?</h4>
+                                <p>Auto-recognition</p>
+                            </div>
+                        </div>
+                        <div class="flow-branch">
+                            <div class="branch-yes">
+                                <div class="flow-arrow down">↓ Yes</div>
+                                <div class="flow-node">
+                                    <div class="node-icon"><i class="fas fa-spinner fa-spin"></i></div>
+                                    <div class="node-content">
+                                        <h4>Processing</h4>
+                                        <p>Animation & Loading</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="branch-no">
+                                <div class="flow-arrow back">← No</div>
+                                <p>Return to Camera</p>
+                            </div>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-node">
+                            <div class="node-icon"><i class="fas fa-database"></i></div>
+                            <div class="node-content">
+                                <h4>Database Lookup</h4>
+                                <p>Product Information</p>
+                            </div>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-node">
+                            <div class="node-icon"><i class="fas fa-microscope"></i></div>
+                            <div class="node-content">
+                                <h4>Ingredient Analysis</h4>
+                                <p>Additive Detection</p>
+                            </div>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-node">
+                            <div class="node-icon"><i class="fas fa-chart-bar"></i></div>
+                            <div class="node-content">
+                                <h4>Results Display</h4>
+                                <p>Risk Assessment</p>
+                            </div>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-node end-node">
+                            <div class="node-icon"><i class="fas fa-tasks"></i></div>
+                            <div class="node-content">
+                                <h4>Action Options</h4>
+                                <p>Save, Share, Alternatives</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Components Section -->
+            <section id="components" class="content-section">
+                <div class="section-header">
+                    <h1>UI Component Library</h1>
+                    <p class="section-description">Reusable components with advanced interactions</p>
+                </div>
+
+                <!-- Button Components -->
+                <div class="component-group">
+                    <h2>Button Components</h2>
+                    <div class="component-showcase">
+                        <div class="component-item">
+                            <h3>Primary Buttons</h3>
+                            <div class="button-examples">
+                                <button class="btn-primary large">Large Primary</button>
+                                <button class="btn-primary">Default Primary</button>
+                                <button class="btn-primary small">Small Primary</button>
+                                <button class="btn-primary disabled" disabled>Disabled</button>
+                            </div>
+                            <div class="component-specs">
+                                <p>Height: 44px | Padding: 16px | Radius: 8px</p>
+                            </div>
+                        </div>
+
+                        <div class="component-item">
+                            <h3>Secondary Buttons</h3>
+                            <div class="button-examples">
+                                <button class="btn-secondary large">Large Secondary</button>
+                                <button class="btn-secondary">Default Secondary</button>
+                                <button class="btn-secondary small">Small Secondary</button>
+                                <button class="btn-secondary disabled" disabled>Disabled</button>
+                            </div>
+                            <div class="component-specs">
+                                <p>Height: 40px | Padding: 12px | Radius: 6px</p>
+                            </div>
+                        </div>
+
+                        <div class="component-item">
+                            <h3>Tertiary Buttons</h3>
+                            <div class="button-examples">
+                                <button class="btn-tertiary large">Large Tertiary</button>
+                                <button class="btn-tertiary">Default Tertiary</button>
+                                <button class="btn-tertiary small">Small Tertiary</button>
+                                <button class="btn-tertiary disabled" disabled>Disabled</button>
+                            </div>
+                            <div class="component-specs">
+                                <p>Height: 36px | Padding: 8px | Radius: 4px</p>
+                            </div>
+                        </div>
+
+                        <div class="component-item">
+                            <h3>Floating Action Button</h3>
+                            <div class="button-examples">
+                                <button class="fab-button scan-fab">
+                                    <i class="fas fa-barcode"></i>
+                                </button>
+                                <button class="fab-button add-fab">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                                <button class="fab-button mini-fab">
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </div>
+                            <div class="component-specs">
+                                <p>Diameter: 56px | Mini: 40px | Elevation: 6px</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card Components -->
+                <div class="component-group">
+                    <h2>Card Components</h2>
+                    <div class="component-showcase">
+                        <div class="component-item">
+                            <h3>Product Cards</h3>
+                            <div class="card-examples">
+                                <div class="product-card safe">
+                                    <div class="product-image">
+                                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiByeD0iOCIgZmlsbD0iIzRDQUY1MCIvPgo8cGF0aCBkPSJNMjQgNDBMMzYgNTJMNTYgMjgiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+Cjwvc3ZnPgo=" alt="Safe Product">
+                                    </div>
+                                    <div class="product-info">
+                                        <h4>Organic Pasta</h4>
+                                        <p class="brand-name">Healthy Brand</p>
+                                        <div class="risk-indicator safe">
+                                            <span class="risk-badge">SAFE</span>
+                                            <span class="risk-score">9.2/10</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="product-card warning">
+                                    <div class="product-image">
+                                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiByeD0iOCIgZmlsbD0iI0ZGOTgwMCIvPgo8cGF0aCBkPSJNNDAgMjBWNDQiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CjxjaXJjbGUgY3g9IjQwIiBjeT0iNTYiIHI9IjIiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPgo=" alt="Warning Product">
+                                    </div>
+                                    <div class="product-info">
+                                        <h4>Processed Snack</h4>
+                                        <p class="brand-name">Popular Brand</p>
+                                        <div class="risk-indicator warning">
+                                            <span class="risk-badge">CAUTION</span>
+                                            <span class="risk-score">6.1/10</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="product-card danger">
+                                    <div class="product-image">
+                                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiByeD0iOCIgZmlsbD0iI0Y0NDMzNiIvPgo8cGF0aCBkPSJNMzAgMzBMNTAgNTAiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CjxwYXRoIGQ9Ik01MCAzMEwzMCA1MCIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPC9zdmc+Cg==" alt="Danger Product">
+                                    </div>
+                                    <div class="product-info">
+                                        <h4>High Additive Food</h4>
+                                        <p class="brand-name">Fast Food Brand</p>
+                                        <div class="risk-indicator danger">
+                                            <span class="risk-badge">AVOID</span>
+                                            <span class="risk-score">2.8/10</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="component-item">
+                            <h3>Information Cards</h3>
+                            <div class="card-examples">
+                                <div class="info-card">
+                                    <div class="card-header">
+                                        <h4>Health Tip</h4>
+                                        <i class="fas fa-lightbulb"></i>
+                                    </div>
+                                    <div class="card-content">
+                                        <p>Avoid products with more than 5 artificial additives for better health outcomes.</p>
+                                    </div>
+                                </div>
+
+                                <div class="info-card warning">
+                                    <div class="card-header">
+                                        <h4>Allergen Alert</h4>
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </div>
+                                    <div class="card-content">
+                                        <p>This product contains ingredients you've marked as allergies.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Input Components -->
+                <div class="component-group">
+                    <h2>Input Components</h2>
+                    <div class="component-showcase">
+                        <div class="component-item">
+                            <h3>Text Inputs</h3>
+                            <div class="input-examples">
+                                <div class="input-group">
+                                    <label for="search-input">Search Products</label>
+                                    <div class="input-wrapper">
+                                        <input type="text" id="search-input" class="text-input" placeholder="Enter product name...">
+                                        <i class="fas fa-search input-icon"></i>
+                                    </div>
+                                </div>
+
+                                <div class="input-group">
+                                    <label for="email-input">Email Address</label>
+                                    <input type="email" id="email-input" class="text-input" placeholder="your.email@example.com">
+                                </div>
+
+                                <div class="input-group error">
+                                    <label for="error-input">Input with Error</label>
+                                    <input type="text" id="error-input" class="text-input error" placeholder="Invalid input">
+                                    <span class="error-message">This field is required</span>
+                                </div>
+
+                                <div class="input-group">
+                                    <label for="disabled-input">Disabled Input</label>
+                                    <input type="text" id="disabled-input" class="text-input" placeholder="Disabled" disabled>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="component-item">
+                            <h3>Selection Components</h3>
+                            <div class="selection-examples">
+                                <div class="checkbox-group">
+                                    <h4>Dietary Restrictions</h4>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" class="checkbox-input" checked>
+                                        <span class="checkbox-custom"></span>
+                                        Vegetarian
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" class="checkbox-input">
+                                        <span class="checkbox-custom"></span>
+                                        Vegan
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" class="checkbox-input">
+                                        <span class="checkbox-custom"></span>
+                                        Gluten-Free
+                                    </label>
+                                </div>
+
+                                <div class="radio-group">
+                                    <h4>Health Goal</h4>
+                                    <label class="radio-label">
+                                        <input type="radio" name="health-goal" class="radio-input" checked>
+                                        <span class="radio-custom"></span>
+                                        Weight Loss
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="health-goal" class="radio-input">
+                                        <span class="radio-custom"></span>
+                                        Muscle Gain
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="health-goal" class="radio-input">
+                                        <span class="radio-custom"></span>
+                                        General Health
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Loading States -->
+                <div class="component-group">
+                    <h2>Loading States</h2>
+                    <div class="component-showcase">
+                        <div class="component-item">
+                            <h3>Loading Indicators</h3>
+                            <div class="loading-examples">
+                                <div class="loader-item">
+                                    <div class="spinner primary"></div>
+                                    <p>Primary Spinner</p>
+                                </div>
+                                <div class="loader-item">
+                                    <div class="pulse-loader">
+                                        <div class="pulse-dot"></div>
+                                        <div class="pulse-dot"></div>
+                                        <div class="pulse-dot"></div>
+                                    </div>
+                                    <p>Pulse Loader</p>
+                                </div>
+                                <div class="loader-item">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 65%;"></div>
+                                    </div>
+                                    <p>Progress Bar (65%)</p>
+                                </div>
+                                <div class="loader-item">
+                                    <div class="skeleton-loader">
+                                        <div class="skeleton-line"></div>
+                                        <div class="skeleton-line short"></div>
+                                        <div class="skeleton-line medium"></div>
+                                    </div>
+                                    <p>Skeleton Loader</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Screens Section -->
+            <section id="screens" class="content-section">
+                <div class="section-header">
+                    <h1>Screen Designs</h1>
+                    <p class="section-description">Detailed layouts for all major app sections</p>
+                </div>
+
+                <div class="screen-navigation">
+                    <button class="screen-nav-item active" data-screen="home">Home Dashboard</button>
+                    <button class="screen-nav-item" data-screen="scan">Scan Interface</button>
+                    <button class="screen-nav-item" data-screen="results">Results Screen</button>
+                    <button class="screen-nav-item" data-screen="health">Health Dashboard</button>
+                    <button class="screen-nav-item" data-screen="profile">Profile Settings</button>
+                </div>
+
+                <!-- Home Dashboard Screen -->
+                <div id="home-screen" class="screen-mockup active">
+                    <div class="mobile-frame">
+                        <div class="mobile-screen">
+                            <!-- Status Bar -->
+                            <div class="status-bar">
+                                <div class="status-left">
+                                    <span class="time">9:41</span>
+                                </div>
+                                <div class="status-right">
+                                    <i class="fas fa-signal"></i>
+                                    <i class="fas fa-wifi"></i>
+                                    <i class="fas fa-battery-three-quarters"></i>
+                                </div>
+                            </div>
+
+                            <!-- App Header -->
+                            <div class="app-header">
+                                <div class="header-greeting">
+                                    <h1>Good morning, Sarah!</h1>
+                                    <p>Let's make healthy choices today</p>
+                                </div>
+                                <div class="header-actions">
+                                    <button class="icon-button">
+                                        <i class="fas fa-bell"></i>
+                                        <span class="notification-badge">2</span>
+                                    </button>
+                                    <button class="icon-button">
+                                        <i class="fas fa-user-circle"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Quick Scan Section -->
+                            <div class="quick-scan-section">
+                                <button class="scan-button-large">
+                                    <div class="scan-icon">
+                                        <i class="fas fa-barcode"></i>
+                                    </div>
+                                    <span class="scan-text">Scan Product</span>
+                                    <div class="scan-animation"></div>
+                                </button>
+                                <p class="scan-description">Point camera at barcode to analyze</p>
+                            </div>
+
+                            <!-- Health Score Widget -->
+                            <div class="health-score-widget">
+                                <div class="widget-header">
+                                    <h3>Your Health Score</h3>
+                                    <button class="widget-action">View Details</button>
+                                </div>
+                                <div class="score-display">
+                                    <div class="score-circle">
+                                        <svg class="score-svg" viewBox="0 0 120 120">
+                                            <circle cx="60" cy="60" r="50" fill="none" stroke="#E0E0E0" stroke-width="8"/>
+                                            <circle cx="60" cy="60" r="50" fill="none" stroke="#4CAF50" stroke-width="8" 
+                                                    stroke-dasharray="314" stroke-dashoffset="94" transform="rotate(-90 60 60)"/>
+                                        </svg>
+                                        <div class="score-value">
+                                            <span class="score-number">78</span>
+                                            <span class="score-label">Good</span>
+                                        </div>
+                                    </div>
+                                    <div class="score-details">
+                                        <div class="score-item">
+                                            <span class="score-metric">Scanned Today</span>
+                                            <span class="score-count">12</span>
+                                        </div>
+                                        <div class="score-item">
+                                            <span class="score-metric">Safe Products</span>
+                                            <span class="score-count">9</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Recent Scans -->
+                            <div class="recent-scans">
+                                <div class="section-header">
+                                    <h3>Recent Scans</h3>
+                                    <button class="section-action">View All</button>
+                                </div>
+                                <div class="scans-list">
+                                    <div class="scan-item safe">
+                                        <div class="scan-image">
+                                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiByeD0iNCIgZmlsbD0iIzRDQUY1MCIvPgo8cGF0aCBkPSJNMTIgMjBMMTggMjZMMjggMTQiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+Cjwvc3ZnPgo=" alt="Safe">
+                                        </div>
+                                        <div class="scan-info">
+                                            <h4>Organic Almonds</h4>
+                                            <p>Blue Diamond</p>
+                                            <span class="scan-time">2 hours ago</span>
+                                        </div>
+                                        <div class="scan-status safe">
+                                            <span class="status-badge">SAFE</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="scan-item warning">
+                                        <div class="scan-image">
+                                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiByeD0iNCIgZmlsbD0iI0ZGOTgwMCIvPgo8cGF0aCBkPSJNMjAgMTBWMjIiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CjxjaXJjbGUgY3g9IjIwIiBjeT0iMjgiIHI9IjEiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPgo=" alt="Warning">
+                                        </div>
+                                        <div class="scan-info">
+                                            <h4>Protein Bar</h4>
+                                            <p>PowerBar</p>
+                                            <span class="scan-time">5 hours ago</span>
+                                        </div>
+                                        <div class="scan-status warning">
+                                            <span class="status-badge">CAUTION</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="scan-item safe">
+                                        <div class="scan-image">
+                                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiByeD0iNCIgZmlsbD0iIzRDQUY1MCIvPgo8cGF0aCBkPSJNMTIgMjBMMTggMjZMMjggMTQiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+Cjwvc3ZnPgo=" alt="Safe">
+                                        </div>
+                                        <div class="scan-info">
+                                            <h4>Greek Yogurt</h4>
+                                            <p>Chobani</p>
+                                            <span class="scan-time">Yesterday</span>
+                                        </div>
+                                        <div class="scan-status safe">
+                                            <span class="status-badge">SAFE</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Quick Actions -->
+                            <div class="quick-actions">
+                                <div class="action-grid">
+                                    <button class="action-item">
+                                        <i class="fas fa-search"></i>
+                                        <span>Search</span>
+                                    </button>
+                                    <button class="action-item">
+                                        <i class="fas fa-history"></i>
+                                        <span>History</span>
+                                    </button>
+                                    <button class="action-item">
+                                        <i class="fas fa-heart"></i>
+                                        <span>Favorites</span>
+                                    </button>
+                                    <button class="action-item">
+                                        <i class="fas fa-users"></i>
+                                        <span>Community</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bottom Navigation -->
+                        <div class="bottom-nav">
+                            <button class="nav-item active">
+                                <i class="fas fa-home"></i>
+                                <span>Home</span>
+                            </button>
+                            <button class="nav-item">
+                                <i class="fas fa-search"></i>
+                                <span>Search</span>
+                            </button>
+                            <button class="nav-item scan-nav">
+                                <i class="fas fa-barcode"></i>
+                                <span>Scan</span>
+                            </button>
+                            <button class="nav-item">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Health</span>
+                            </button>
+                            <button class="nav-item">
+                                <i class="fas fa-user"></i>
+                                <span>Profile</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Other screen mockups would go here -->
+                <div id="scan-screen" class="screen-mockup">
+                    <div class="mobile-frame">
+                        <div class="mobile-screen camera-interface">
+                            <div class="camera-overlay">
+                                <div class="camera-header">
+                                    <button class="back-button">
+                                        <i class="fas fa-arrow-left"></i>
+                                    </button>
+                                    <h2>Scan Product</h2>
+                                    <button class="flash-toggle">
+                                        <i class="fas fa-bolt"></i>
+                                    </button>
+                                </div>
+
+                                <div class="scan-area">
+                                    <div class="scan-frame">
+                                        <div class="corner top-left"></div>
+                                        <div class="corner top-right"></div>
+                                        <div class="corner bottom-left"></div>
+                                        <div class="corner bottom-right"></div>
+                                        <div class="scan-line"></div>
+                                    </div>
+                                    <p class="scan-instruction">Position barcode within the frame</p>
+                                </div>
+
+                                <div class="camera-controls">
+                                    <button class="control-button">
+                                        <i class="fas fa-image"></i>
+                                        <span>Gallery</span>
+                                    </button>
+                                    <button class="scan-button-camera">
+                                        <div class="scan-pulse"></div>
+                                        <i class="fas fa-barcode"></i>
+                                    </button>
+                                    <button class="control-button">
+                                        <i class="fas fa-keyboard"></i>
+                                        <span>Manual</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Interactions Section -->
+            <section id="interactions" class="content-section">
+                <div class="section-header">
+                    <h1>Advanced Interactions</h1>
+                    <p class="section-description">Microinteractions and animation patterns</p>
+                </div>
+
+                <div class="interaction-groups">
+                    <!-- Scanning Animations -->
+                    <div class="interaction-group">
+                        <h2>Scanning Interactions</h2>
+                        <div class="interaction-demos">
+                            <div class="demo-item">
+                                <h3>Scan Detection Animation</h3>
+                                <div class="demo-container">
+                                    <div class="scan-demo">
+                                        <div class="scan-target">
+                                            <div class="scan-beam"></div>
+                                            <div class="detection-pulse"></div>
+                                        </div>
+                                        <button class="demo-trigger" onclick="triggerScanAnimation(this)">Trigger Scan</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="demo-item">
+                                <h3>Processing Animation</h3>
+                                <div class="demo-container">
+                                    <div class="processing-demo">
+                                        <div class="processing-spinner">
+                                            <div class="spinner-ring"></div>
+                                            <div class="spinner-ring"></div>
+                                            <div class="spinner-ring"></div>
+                                        </div>
+                                        <p class="processing-text">Analyzing ingredients...</p>
+                                        <button class="demo-trigger" onclick="triggerProcessingAnimation(this)">Start Processing</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="demo-item">
+                                <h3>Success Confirmation</h3>
+                                <div class="demo-container">
+                                    <div class="success-demo">
+                                        <div class="success-checkmark">
+                                            <svg class="checkmark-svg" viewBox="0 0 52 52">
+                                                <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+                                                <path class="checkmark-check" fill="none" d="m14.1 27.2l7.1 7.2 16.7-16.8"/>
+                                            </svg>
+                                        </div>
+                                        <p class="success-text">Product analyzed successfully!</p>
+                                        <button class="demo-trigger" onclick="triggerSuccessAnimation(this)">Show Success</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Button Interactions -->
+                    <div class="interaction-group">
+                        <h2>Button Microinteractions</h2>
+                        <div class="interaction-demos">
+                            <div class="demo-item">
+                                <h3>Ripple Effect</h3>
+                                <div class="demo-container">
+                                    <button class="ripple-button" onclick="createRipple(event, this)">
+                                        Click Me
+                                        <span class="ripple-overlay"></span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="demo-item">
+                                <h3>Loading Button</h3>
+                                <div class="demo-container">
+                                    <button class="loading-button" onclick="toggleLoadingState(this)">
+                                        <span class="button-text">Save Product</span>
+                                        <span class="button-loader">
+                                            <div class="loader-dot"></div>
+                                            <div class="loader-dot"></div>
+                                            <div class="loader-dot"></div>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="demo-item">
+                                <h3>Favorite Toggle</h3>
+                                <div class="demo-container">
+                                    <button class="favorite-button" onclick="toggleFavorite(this)">
+                                        <i class="heart-icon fas fa-heart"></i>
+                                        <span class="favorite-text">Add to Favorites</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card Interactions -->
+                    <div class="interaction-group">
+                        <h2>Card Interactions</h2>
+                        <div class="interaction-demos">
+                            <div class="demo-item">
+                                <h3>Swipe Actions</h3>
+                                <div class="demo-container">
+                                    <div class="swipeable-card" ontouchstart="handleTouchStart(event)" ontouchmove="handleTouchMove(event)" ontouchend="handleTouchEnd(event)">
+                                        <div class="card-content">
+                                            <div class="product-info">
+                                                <h4>Organic Cookies</h4>
+                                                <p>Healthy Brand</p>
+                                            </div>
+                                            <div class="swipe-indicator">← Swipe for actions</div>
+                                        </div>
+                                        <div class="swipe-actions">
+                                            <button class="swipe-action save">
+                                                <i class="fas fa-bookmark"></i>
+                                                Save
+                                            </button>
+                                            <button class="swipe-action share">
+                                                <i class="fas fa-share"></i>
+                                                Share
+                                            </button>
+                                            <button class="swipe-action delete">
+                                                <i class="fas fa-trash"></i>
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="demo-item">
+                                <h3>Expandable Card</h3>
+                                <div class="demo-container">
+                                    <div class="expandable-card" onclick="toggleCardExpansion(this)">
+                                        <div class="card-header">
+                                            <h4>Ingredient Analysis</h4>
+                                            <i class="expand-icon fas fa-chevron-down"></i>
+                                        </div>
+                                        <div class="card-preview">
+                                            <p>Contains 3 additives, 1 potentially harmful</p>
+                                        </div>
+                                        <div class="card-expanded">
+                                            <div class="ingredient-list">
+                                                <div class="ingredient safe">
+                                                    <span class="ingredient-name">Natural Flavor</span>
+                                                    <span class="ingredient-status">Safe</span>
+                                                </div>
+                                                <div class="ingredient safe">
+                                                    <span class="ingredient-name">Citric Acid</span>
+                                                    <span class="ingredient-status">Safe</span>
+                                                </div>
+                                                <div class="ingredient warning">
+                                                    <span class="ingredient-name">Red Dye #40</span>
+                                                    <span class="ingredient-status">Caution</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Data Visualization Animations -->
+                    <div class="interaction-group">
+                        <h2>Data Visualization Animations</h2>
+                        <div class="interaction-demos">
+                            <div class="demo-item">
+                                <h3>Animated Progress Ring</h3>
+                                <div class="demo-container">
+                                    <div class="progress-ring-demo">
+                                        <svg class="progress-ring" width="120" height="120">
+                                            <circle class="progress-ring-background" cx="60" cy="60" r="50"/>
+                                            <circle class="progress-ring-fill" cx="60" cy="60" r="50" style="--progress: 0"/>
+                                        </svg>
+                                        <div class="progress-text">
+                                            <span class="progress-value">0%</span>
+                                            <span class="progress-label">Health Score</span>
+                                        </div>
+                                        <button class="demo-trigger" onclick="animateProgressRing(this)">Animate to 75%</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="demo-item">
+                                <h3>Bar Chart Growth</h3>
+                                <div class="demo-container">
+                                    <div class="bar-chart-demo">
+                                        <div class="chart-bars">
+                                            <div class="bar-item">
+                                                <div class="bar" data-height="80">
+                                                    <div class="bar-fill"></div>
+                                                </div>
+                                                <span class="bar-label">Mon</span>
+                                            </div>
+                                            <div class="bar-item">
+                                                <div class="bar" data-height="60">
+                                                    <div class="bar-fill"></div>
+                                                </div>
+                                                <span class="bar-label">Tue</span>
+                                            </div>
+                                            <div class="bar-item">
+                                                <div class="bar" data-height="90">
+                                                    <div class="bar-fill"></div>
+                                                </div>
+                                                <span class="bar-label">Wed</span>
+                                            </div>
+                                            <div class="bar-item">
+                                                <div class="bar" data-height="70">
+                                                    <div class="bar-fill"></div>
+                                                </div>
+                                                <span class="bar-label">Thu</span>
+                                            </div>
+                                            <div class="bar-item">
+                                                <div class="bar" data-height="85">
+                                                    <div class="bar-fill"></div>
+                                                </div>
+                                                <span class="bar-label">Fri</span>
+                                            </div>
+                                        </div>
+                                        <button class="demo-trigger" onclick="animateBarChart(this)">Animate Chart</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="demo-item">
+                                <h3>Counter Animation</h3>
+                                <div class="demo-container">
+                                    <div class="counter-demo">
+                                        <div class="counter-grid">
+                                            <div class="counter-item">
+                                                <span class="counter-value" data-target="1247">0</span>
+                                                <span class="counter-label">Products Scanned</span>
+                                            </div>
+                                            <div class="counter-item">
+                                                <span class="counter-value" data-target="89">0</span>
+                                                <span class="counter-label">Health Score</span>
+                                            </div>
+                                            <div class="counter-item">
+                                                <span class="counter-value" data-target="23">0</span>
+                                                <span class="counter-label">Avoided Additives</span>
+                                            </div>
+                                        </div>
+                                        <button class="demo-trigger" onclick="animateCounters(this)">Start Counting</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
