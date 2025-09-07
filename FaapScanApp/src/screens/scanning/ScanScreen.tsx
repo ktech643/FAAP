@@ -12,6 +12,7 @@ import {
   Animated,
   Vibration,
   Alert,
+  AppState,
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Colors } from '../../constants/colors';
@@ -20,6 +21,7 @@ import { Dimensions } from '../../constants/dimensions';
 import Button from '../../components/common/Button';
 import { H4, Body, Caption } from '../../components/common/Typography';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
+import { CameraService } from '../../services/camera/CameraService';
 import { RootStackParamList, ScanResult } from '../../types';
 
 type ScanScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Scanning'>;
@@ -29,33 +31,93 @@ interface Props {
 }
 
 const ScanScreen: React.FC<Props> = ({ navigation }) => {
-  const [isScanning, setIsScanning] = useState(true);
+  const [isScanning, setIsScanning] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [flashOn, setFlashOn] = useState(false);
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
+  const [cameraError, setCameraError] = useState<string | null>(null);
   
   // Animation refs
   const scanLineAnim = useRef(new Animated.Value(0)).current;
   const pulseAnim = useRef(new Animated.Value(1)).current;
   const focusAnim = useRef(new Animated.Value(0)).current;
+  
+  // Camera service instance
+  const cameraService = useRef(CameraService.getInstance()).current;
 
   useEffect(() => {
-    // Request camera permission
-    requestCameraPermission();
+    // Initialize camera and request permissions
+    initializeCamera();
     
-    // Start scan line animation
-    startScanLineAnimation();
+    // Handle app state changes
+    const handleAppStateChange = (nextAppState: string) => {
+      if (nextAppState === 'active') {
+        // App came to foreground, reinitialize camera if needed
+        if (hasPermission && !cameraService.isReady()) {
+          initializeCamera();
+        }
+      } else if (nextAppState === 'background') {
+        // App went to background, release camera resources
+        cameraService.releaseCamera();
+        setIsScanning(false);
+      }
+    };
+
+    const subscription = AppState.addEventListener('change', handleAppStateChange);
     
-    // Start pulse animation for scan area
-    startPulseAnimation();
+    return () => {
+      subscription?.remove();
+      cameraService.releaseCamera();
+    };
   }, []);
 
-  const requestCameraPermission = async () => {
-    // In a real app, use react-native-permissions
-    // For now, simulate permission request
-    setTimeout(() => {
-      setHasPermission(true);
-    }, 500);
+  useEffect(() => {
+    if (hasPermission && !isProcessing) {
+      // Start animations when camera is ready
+      startScanLineAnimation();
+      startPulseAnimation();
+      setIsScanning(true);
+      
+      // Start automatic barcode detection
+      startBarcodeDetection();
+    }
+  }, [hasPermission, isProcessing]);
+
+  const initializeCamera = async () => {
+    try {
+      setCameraError(null);
+      const success = await cameraService.initializeCamera();
+      setHasPermission(success);
+      
+      if (!success) {
+        setCameraError('Failed to initialize camera. Please check permissions.');
+      }
+    } catch (error) {
+      console.error('Camera initialization error:', error);
+      setCameraError('Camera initialization failed. Please try again.');
+      cameraService.handleCameraError(error);
+    }
+  };
+
+  const startBarcodeDetection = async () => {
+    if (!isScanning || isProcessing || !cameraService.isReady()) {
+      return;
+    }
+
+    try {
+      const barcode = await cameraService.detectBarcode();
+      if (barcode && isScanning) {
+        handleBarcodeDetected(barcode);
+      } else if (isScanning) {
+        // Continue scanning if no barcode detected
+        setTimeout(startBarcodeDetection, 1000);
+      }
+    } catch (error) {
+      console.error('Barcode detection error:', error);
+      if (isScanning) {
+        setTimeout(startBarcodeDetection, 2000); // Retry after delay
+      }
+    }
   };
 
   const startScanLineAnimation = () => {
@@ -172,7 +234,29 @@ const ScanScreen: React.FC<Props> = ({ navigation }) => {
   };
 
   const toggleFlash = () => {
-    setFlashOn(!flashOn);
+    try {
+      cameraService.toggleFlash();
+      const newFlashState = cameraService.getConfig().flashMode === 'on';
+      setFlashOn(newFlashState);
+    } catch (error) {
+      console.error('Flash toggle error:', error);
+      Alert.alert('Error', 'Failed to toggle flash. Please try again.');
+    }
+  };
+
+  const handleCameraFocus = async (x: number, y: number) => {
+    try {
+      await cameraService.focusAt(x, y);
+      startFocusAnimation();
+    } catch (error) {
+      console.error('Focus error:', error);
+    }
+  };
+
+  const retryCamera = () => {
+    setHasPermission(null);
+    setCameraError(null);
+    initializeCamera();
   };
 
   const handleClose = () => {
@@ -187,17 +271,19 @@ const ScanScreen: React.FC<Props> = ({ navigation }) => {
     );
   }
 
-  if (hasPermission === false) {
+  if (hasPermission === false || cameraError) {
     return (
       <SafeAreaView style={styles.permissionContainer}>
         <View style={styles.permissionContent}>
-          <H4 style={styles.permissionTitle}>Camera Permission Required</H4>
+          <H4 style={styles.permissionTitle}>
+            {cameraError ? 'Camera Error' : 'Camera Permission Required'}
+          </H4>
           <Body color="secondary" style={styles.permissionText}>
-            Please grant camera permission to scan barcodes
+            {cameraError || 'Please grant camera permission to scan barcodes'}
           </Body>
           <Button
-            title="Grant Permission"
-            onPress={requestCameraPermission}
+            title={cameraError ? 'Retry Camera' : 'Grant Permission'}
+            onPress={cameraError ? retryCamera : initializeCamera}
             variant="primary"
             style={styles.permissionButton}
           />
@@ -215,12 +301,25 @@ const ScanScreen: React.FC<Props> = ({ navigation }) => {
   return (
     <View style={styles.container}>
       {/* Camera View Placeholder */}
-      <View style={styles.cameraContainer}>
+      <TouchableOpacity 
+        style={styles.cameraContainer}
+        onPress={(event) => {
+          const { locationX, locationY } = event.nativeEvent;
+          handleCameraFocus(locationX, locationY);
+        }}
+        activeOpacity={1}
+      >
         <View style={styles.cameraPlaceholder}>
           <Body color="secondary" style={styles.cameraText}>
             Camera View (Placeholder)
           </Body>
+          {cameraError && (
+            <Body color="error" style={styles.errorText}>
+              {cameraError}
+            </Body>
+          )}
         </View>
+      </TouchableOpacity>
 
         {/* Scan Overlay */}
         <View style={styles.overlay}>
@@ -333,7 +432,6 @@ const ScanScreen: React.FC<Props> = ({ navigation }) => {
             </View>
           </SafeAreaView>
         </View>
-      </View>
 
       {/* Processing overlay */}
       {isProcessing && (
@@ -548,6 +646,11 @@ const styles = StyleSheet.create({
   permissionButton: {
     marginBottom: Spacing.md,
     minWidth: 200,
+  },
+  errorText: {
+    marginTop: Spacing.sm,
+    textAlign: 'center',
+    color: Colors.secondary.error,
   },
 });
 
