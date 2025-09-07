@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAAP Scan - UI Design Mockup</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+            background: #FAFAFA;
+            color: #212121;
+        }
+        
+        /* Mobile Frame */
+        .mobile-frame {
+            width: 375px;
+            height: 812px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 40px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .status-bar {
+            height: 44px;
+            background: #2E7D32;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            color: white;
+            font-size: 12px;
+        }
+        
+        /* Home Screen */
+        .home-screen {
+            height: calc(100% - 44px);
+            overflow-y: auto;
+        }
+        
+        .home-header {
+            background: linear-gradient(135deg, #2E7D32, #43A047);
+            color: white;
+            padding: 20px;
+            border-radius: 0 0 24px 24px;
+        }
+        
+        .greeting {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .scan-hero {
+            margin: 20px;
+            padding: 24px;
+            background: linear-gradient(135deg, #2E7D32, #43A047);
+            border-radius: 16px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 8px 16px rgba(46, 125, 50, 0.3);
+        }
+        
+        .scan-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 24px;
+        }
+        
+        .scan-button {
+            background: white;
+            color: #2E7D32;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-top: 16px;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        .health-score {
+            margin: 0 20px 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+        }
+        
+        .score-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 6px solid #2E7D32;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            margin-right: 20px;
+        }
+        
+        .score-number {
+            font-size: 28px;
+            font-weight: bold;
+            color: #2E7D32;
+        }
+        
+        .score-label {
+            font-size: 10px;
+            color: #757575;
+        }
+        
+        .quick-actions {
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        
+        .action-card {
+            background: white;
+            padding: 16px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+        
+        .action-icon {
+            width: 48px;
+            height: 48px;
+            background: #E8F5E9;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 8px;
+            font-size: 20px;
+        }
+        
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background: white;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding-bottom: 8px;
+        }
+        
+        .nav-item {
+            text-align: center;
+            color: #9E9E9E;
+            font-size: 10px;
+        }
+        
+        .nav-item.active {
+            color: #2E7D32;
+        }
+        
+        .nav-icon {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+        
+        .scan-fab {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #2E7D32, #43A047);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            box-shadow: 0 4px 8px rgba(46, 125, 50, 0.3);
+            margin-top: -8px;
+        }
+        
+        /* Scan Results Screen */
+        .scan-results {
+            display: none;
+            height: 100%;
+            background: #FAFAFA;
+        }
+        
+        .results-header {
+            height: 200px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .results-header.high-risk {
+            background: linear-gradient(135deg, #D32F2F, #E53935);
+        }
+        
+        .results-header.medium-risk {
+            background: linear-gradient(135deg, #FBC02D, #FFD54F);
+        }
+        
+        .results-header.low-risk {
+            background: linear-gradient(135deg, #2E7D32, #43A047);
+        }
+        
+        .risk-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+        
+        .product-info {
+            background: white;
+            margin: -20px 20px 20px;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        
+        .additive-list {
+            margin: 0 20px;
+        }
+        
+        .additive-item {
+            background: white;
+            padding: 16px;
+            margin-bottom: 12px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+        }
+        
+        .additive-code {
+            width: 56px;
+            height: 56px;
+            background: #FFEBEE;
+            color: #D32F2F;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 16px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Home Screen Mockup -->
+    <div class="mobile-frame">
+        <div class="status-bar">
+            <span>9:41</span>
+            <span>100%</span>
+        </div>
+        
+        <div class="home-screen">
+            <div class="home-header">
+                <div class="greeting">Hello, there!</div>
+                <div class="subtitle">Stay healthy, scan wisely</div>
+            </div>
+            
+            <div class="scan-hero">
+                <div class="scan-icon">📷</div>
+                <h3>Quick Scan</h3>
+                <p style="font-size: 14px; opacity: 0.9; margin: 8px 0;">Scan a product barcode to check its safety</p>
+                <button class="scan-button">Start Scanning</button>
+            </div>
+            
+            <div class="health-score">
+                <div class="score-circle">
+                    <div class="score-number">78</div>
+                    <div class="score-label">/100</div>
+                </div>
+                <div>
+                    <div style="font-weight: 600;">Your Health Score</div>
+                    <div style="font-size: 12px; color: #2E7D32; margin-top: 4px;">📈 Improving</div>
+                    <div style="font-size: 11px; color: #9E9E9E; margin-top: 4px;">Tap to view detailed insights</div>
+                </div>
+            </div>
+            
+            <div class="quick-actions">
+                <div class="action-card">
+                    <div class="action-icon" style="color: #1976D2;">🔍</div>
+                    <div style="font-weight: 600; font-size: 14px;">Search</div>
+                    <div style="font-size: 11px; color: #9E9E9E;">Find products</div>
+                </div>
+                <div class="action-card">
+                    <div class="action-icon" style="color: #FBC02D;">📋</div>
+                    <div style="font-weight: 600; font-size: 14px;">History</div>
+                    <div style="font-size: 11px; color: #9E9E9E;">Past scans</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bottom-nav">
+            <div class="nav-item active">
+                <div class="nav-icon">🏠</div>
+                <div>Home</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">🔍</div>
+                <div>Search</div>
+            </div>
+            <div class="scan-fab">📷</div>
+            <div class="nav-item">
+                <div class="nav-icon">📊</div>
+                <div>Health</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">👤</div>
+                <div>Profile</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scan Results Mockup -->
+    <div class="mobile-frame">
+        <div class="status-bar">
+            <span>9:41</span>
+            <span>100%</span>
+        </div>
+        
+        <div class="scan-results" style="display: block;">
+            <div class="results-header high-risk">
+                <div style="text-align: center;">
+                    <div class="risk-icon">⚠️</div>
+                    <h2>High Risk Product</h2>
+                    <p>3 harmful additives detected</p>
+                </div>
+            </div>
+            
+            <div class="product-info">
+                <h3>Sample Product</h3>
+                <p style="color: #757575; font-size: 14px;">Brand Name</p>
+                <div style="background: #F5F5F5; padding: 8px 12px; border-radius: 20px; display: inline-block; margin-top: 8px; font-size: 12px; color: #757575;">
+                    <span style="font-family: monospace;">1234567890123</span>
+                </div>
+            </div>
+            
+            <h4 style="margin: 0 20px 12px; font-size: 16px;">Additives Found</h4>
+            
+            <div class="additive-list">
+                <div class="additive-item">
+                    <div class="additive-code">E102</div>
+                    <div style="flex: 1;">
+                        <div style="font-weight: 600;">Tartrazine</div>
+                        <div style="font-size: 12px; color: #757575;">Yellow synthetic food dye</div>
+                        <div style="font-size: 11px; color: #D32F2F; margin-top: 4px;">HIGH RISK</div>
+                    </div>
+                    <div style="color: #9E9E9E;">→</div>
+                </div>
+                
+                <div class="additive-item">
+                    <div class="additive-code" style="background: #FFF3E0; color: #F57C00;">E211</div>
+                    <div style="flex: 1;">
+                        <div style="font-weight: 600;">Sodium Benzoate</div>
+                        <div style="font-size: 12px; color: #757575;">Preservative</div>
+                        <div style="font-size: 11px; color: #F57C00; margin-top: 4px;">MEDIUM RISK</div>
+                    </div>
+                    <div style="color: #9E9E9E;">→</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
