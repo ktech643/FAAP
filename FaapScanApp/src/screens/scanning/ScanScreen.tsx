@@ -38,6 +38,9 @@ const ScanScreen: React.FC<Props> = ({ navigation }) => {
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [cameraError, setCameraError] = useState<string | null>(null);
   const [fallbackMode, setFallbackMode] = useState<boolean>(false);
+  const [currentCameraType, setCurrentCameraType] = useState<'back' | 'front'>('back');
+  const [canSwitchCamera, setCanSwitchCamera] = useState<boolean>(false);
+  const [isSwitchingCamera, setIsSwitchingCamera] = useState<boolean>(false);
   
   // Animation refs
   const scanLineAnim = useRef(new Animated.Value(0)).current;
@@ -75,10 +78,18 @@ const ScanScreen: React.FC<Props> = ({ navigation }) => {
         setCameraError('Camera unavailable - using manual entry mode');
       }
     });
+
+    // Listen for camera switch events
+    const cameraSwitchListener = DeviceEventEmitter.addListener('CameraSwitched', (data) => {
+      setCurrentCameraType(data.to);
+      setFlashOn(data.hasFlash && flashOn); // Disable flash if new camera doesn't support it
+      console.log(`UI: Camera switched from ${data.from} to ${data.to}`);
+    });
     
     return () => {
       subscription?.remove();
       fallbackListener?.remove();
+      cameraSwitchListener?.remove();
       cameraService.releaseCamera();
     };
   }, []);
@@ -103,6 +114,13 @@ const ScanScreen: React.FC<Props> = ({ navigation }) => {
       
       if (!success) {
         setCameraError('Failed to initialize camera. Please check permissions.');
+      } else {
+        // Update camera capabilities after initialization
+        setCanSwitchCamera(cameraService.canSwitchCamera());
+        const currentCamera = cameraService.getCurrentCameraInfo();
+        if (currentCamera) {
+          setCurrentCameraType(currentCamera.type);
+        }
       }
     } catch (error) {
       console.error('Camera initialization error:', error);
@@ -271,6 +289,49 @@ const ScanScreen: React.FC<Props> = ({ navigation }) => {
     initializeCamera();
   };
 
+  const handleCameraSwitch = async () => {
+    if (isSwitchingCamera || !canSwitchCamera) {
+      return;
+    }
+
+    try {
+      setIsSwitchingCamera(true);
+      setIsScanning(false);
+
+      const success = await cameraService.switchCamera();
+      
+      if (success) {
+        // Update UI state
+        const newCameraType = cameraService.getCurrentCameraInfo()?.type;
+        if (newCameraType) {
+          setCurrentCameraType(newCameraType);
+        }
+        
+        // Restart scanning after switch
+        setTimeout(() => {
+          setIsScanning(true);
+          startBarcodeDetection();
+        }, 500);
+      } else {
+        Alert.alert('Camera Switch Failed', 'Unable to switch camera. Please try again.');
+      }
+    } catch (error) {
+      console.error('Camera switch error:', error);
+      Alert.alert('Error', 'Failed to switch camera. Please try again.');
+    } finally {
+      setIsSwitchingCamera(false);
+    }
+  };
+
+  const getCameraSwitchIcon = () => {
+    return currentCameraType === 'back' ? '🤳' : '📷';
+  };
+
+  const getCameraSwitchLabel = () => {
+    const nextType = cameraService.getNextCameraType();
+    return nextType ? `${nextType === 'front' ? 'Front' : 'Rear'} Cam` : 'Switch';
+  };
+
   const handleClose = () => {
     navigation.goBack();
   };
@@ -341,11 +402,32 @@ const ScanScreen: React.FC<Props> = ({ navigation }) => {
               <Body style={styles.closeButtonText}>✕</Body>
             </TouchableOpacity>
             
-            <TouchableOpacity style={styles.flashButton} onPress={toggleFlash}>
-              <Body style={styles.flashButtonText}>
-                {flashOn ? '🔦' : '💡'}
-              </Body>
-            </TouchableOpacity>
+            <View style={styles.topRightControls}>
+              {canSwitchCamera && (
+                <TouchableOpacity 
+                  style={[styles.controlButton, isSwitchingCamera && styles.controlButtonDisabled]} 
+                  onPress={handleCameraSwitch}
+                  disabled={isSwitchingCamera}
+                >
+                  <Body style={styles.controlButtonText}>
+                    {isSwitchingCamera ? '🔄' : getCameraSwitchIcon()}
+                  </Body>
+                </TouchableOpacity>
+              )}
+              
+              <TouchableOpacity 
+                style={[
+                  styles.flashButton, 
+                  !cameraService.getCurrentCameraInfo()?.hasFlash && styles.controlButtonDisabled
+                ]} 
+                onPress={toggleFlash}
+                disabled={!cameraService.getCurrentCameraInfo()?.hasFlash}
+              >
+                <Body style={styles.flashButtonText}>
+                  {flashOn ? '🔦' : '💡'}
+                </Body>
+              </TouchableOpacity>
+            </View>
           </SafeAreaView>
 
           {/* Scan Area */}
@@ -437,10 +519,25 @@ const ScanScreen: React.FC<Props> = ({ navigation }) => {
                 style={styles.manualScanButton}
               />
 
-              <TouchableOpacity style={styles.historyButton}>
-                <Body style={styles.controlButtonText}>📋</Body>
-                <Caption style={styles.controlLabel}>History</Caption>
-              </TouchableOpacity>
+              {canSwitchCamera ? (
+                <TouchableOpacity 
+                  style={styles.switchCameraButton}
+                  onPress={handleCameraSwitch}
+                  disabled={isSwitchingCamera}
+                >
+                  <Body style={styles.controlButtonText}>
+                    {isSwitchingCamera ? '🔄' : getCameraSwitchIcon()}
+                  </Body>
+                  <Caption style={styles.controlLabel}>
+                    {isSwitchingCamera ? 'Switching...' : getCameraSwitchLabel()}
+                  </Caption>
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity style={styles.historyButton}>
+                  <Body style={styles.controlButtonText}>📋</Body>
+                  <Caption style={styles.controlLabel}>History</Caption>
+                </TouchableOpacity>
+              )}
             </View>
 
             {/* Tips */}
@@ -496,6 +593,24 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: Spacing.lg,
     paddingTop: Spacing.md,
+  },
+  topRightControls: {
+    flexDirection: 'row',
+    gap: Spacing.sm,
+  },
+  controlButton: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: Colors.alpha.black50,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  controlButtonDisabled: {
+    opacity: 0.5,
+  },
+  controlButtonText: {
+    fontSize: 18,
   },
   closeButton: {
     width: 44,
@@ -613,6 +728,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   historyButton: {
+    alignItems: 'center',
+    flex: 1,
+  },
+  switchCameraButton: {
     alignItems: 'center',
     flex: 1,
   },

@@ -18,6 +18,15 @@ export interface CameraConfig {
   flashMode: 'auto' | 'on' | 'off';
   focusMode: 'auto' | 'manual';
   whiteBalance: 'auto' | 'sunny' | 'cloudy' | 'fluorescent';
+  cameraType: 'back' | 'front';
+}
+
+export interface CameraInfo {
+  id: string;
+  type: 'back' | 'front';
+  hasFlash: boolean;
+  hasAutoFocus: boolean;
+  isAvailable: boolean;
 }
 
 export class CameraService {
@@ -28,6 +37,8 @@ export class CameraService {
   private activeSession: any = null;
   private retryCount: number = 0;
   private maxRetries: number = 3;
+  private availableCameras: CameraInfo[] = [];
+  private currentCameraId: string = '0'; // Default to back camera
 
   private constructor() {
     this.currentConfig = {
@@ -35,6 +46,7 @@ export class CameraService {
       flashMode: 'auto',
       focusMode: 'auto',
       whiteBalance: 'auto',
+      cameraType: 'back',
     };
     
     this.camera2Handler = Camera2ApiHandler.getInstance();
@@ -189,8 +201,11 @@ export class CameraService {
         return false;
       }
 
-      // Simulate camera initialization
-      await new Promise(resolve => setTimeout(resolve, 500));
+      // Discover available cameras
+      await this.discoverAvailableCameras();
+      
+      // Initialize with current camera
+      await this.initializeCameraById(this.currentCameraId);
       
       this.isInitialized = true;
       return true;
@@ -198,6 +213,66 @@ export class CameraService {
       console.error('Camera initialization failed:', error);
       this.handleCameraError(error);
       return false;
+    }
+  }
+
+  /**
+   * Discover available cameras on the device
+   */
+  private async discoverAvailableCameras(): Promise<void> {
+    try {
+      // Simulate camera discovery
+      // In a real implementation, you'd use Camera2 API or react-native-vision-camera
+      this.availableCameras = [
+        {
+          id: '0',
+          type: 'back',
+          hasFlash: true,
+          hasAutoFocus: true,
+          isAvailable: true,
+        },
+        {
+          id: '1',
+          type: 'front',
+          hasFlash: false,
+          hasAutoFocus: false,
+          isAvailable: true,
+        },
+      ];
+      
+      console.log('Camera Service: Discovered cameras:', this.availableCameras);
+    } catch (error) {
+      console.error('Camera discovery failed:', error);
+      this.availableCameras = [];
+    }
+  }
+
+  /**
+   * Initialize a specific camera by ID
+   */
+  private async initializeCameraById(cameraId: string): Promise<void> {
+    try {
+      console.log(`Camera Service: Initializing camera ${cameraId}`);
+      
+      // Simulate camera initialization
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      // Update current camera info
+      const cameraInfo = this.availableCameras.find(cam => cam.id === cameraId);
+      if (cameraInfo) {
+        this.currentCameraId = cameraId;
+        this.currentConfig.cameraType = cameraInfo.type;
+        
+        // Disable flash for front camera
+        if (cameraInfo.type === 'front' && !cameraInfo.hasFlash) {
+          this.currentConfig.flashMode = 'off';
+        }
+        
+        console.log(`Camera Service: Initialized ${cameraInfo.type} camera`);
+      }
+    } catch (error) {
+      console.error(`Failed to initialize camera ${cameraId}:`, error);
+      throw error;
     }
   }
 
@@ -381,10 +456,99 @@ export class CameraService {
    * Toggle flash
    */
   public toggleFlash(): void {
+    const currentCamera = this.getCurrentCameraInfo();
+    
+    // Check if current camera supports flash
+    if (!currentCamera?.hasFlash) {
+      console.log('Camera Service: Flash not available on current camera');
+      return;
+    }
+    
     const currentFlash = this.currentConfig.flashMode;
     const newFlash = currentFlash === 'off' ? 'on' : 'off';
     this.updateConfig({ flashMode: newFlash });
     console.log(`Flash toggled: ${currentFlash} -> ${newFlash}`);
+  }
+
+  /**
+   * Switch between front and rear camera
+   */
+  public async switchCamera(): Promise<boolean> {
+    try {
+      if (!this.isInitialized) {
+        throw new Error('Camera not initialized');
+      }
+
+      // Find the other camera
+      const currentType = this.currentConfig.cameraType;
+      const targetType = currentType === 'back' ? 'front' : 'back';
+      const targetCamera = this.availableCameras.find(cam => cam.type === targetType);
+
+      if (!targetCamera) {
+        console.error(`Camera Service: ${targetType} camera not available`);
+        return false;
+      }
+
+      if (!targetCamera.isAvailable) {
+        console.error(`Camera Service: ${targetType} camera is not available`);
+        return false;
+      }
+
+      console.log(`Camera Service: Switching from ${currentType} to ${targetType} camera`);
+
+      // Release current camera session
+      await this.releaseCamera();
+
+      // Initialize new camera
+      await this.initializeCameraById(targetCamera.id);
+
+      // Notify listeners about camera switch
+      DeviceEventEmitter.emit('CameraSwitched', {
+        from: currentType,
+        to: targetType,
+        hasFlash: targetCamera.hasFlash,
+        hasAutoFocus: targetCamera.hasAutoFocus,
+      });
+
+      console.log(`Camera Service: Successfully switched to ${targetType} camera`);
+      return true;
+    } catch (error) {
+      console.error('Camera switch failed:', error);
+      this.handleCameraError(error);
+      return false;
+    }
+  }
+
+  /**
+   * Get available cameras
+   */
+  public getAvailableCameras(): CameraInfo[] {
+    return [...this.availableCameras];
+  }
+
+  /**
+   * Get current camera info
+   */
+  public getCurrentCameraInfo(): CameraInfo | null {
+    return this.availableCameras.find(cam => cam.id === this.currentCameraId) || null;
+  }
+
+  /**
+   * Check if camera switching is available
+   */
+  public canSwitchCamera(): boolean {
+    return this.availableCameras.length > 1 && 
+           this.availableCameras.filter(cam => cam.isAvailable).length > 1;
+  }
+
+  /**
+   * Get the type of camera that would be switched to
+   */
+  public getNextCameraType(): 'front' | 'back' | null {
+    if (!this.canSwitchCamera()) return null;
+    
+    const currentType = this.currentConfig.cameraType;
+    return currentType === 'back' ? 'front' : 'back';
   }
 
   /**
