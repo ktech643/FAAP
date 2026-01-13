@@ -1,0 +1,380 @@
+[
+  {
+    "id": 1,
+    "name": ["sodium nitrate"],
+    "category": "Food Additive",
+    "risk": "Added to processed meats to stop bacterial growth. Linked to cancer in humans."
+  },
+  {
+    "id": 2,
+    "name": ["sulfites"],
+    "category": "Food Additive",
+    "risk": "Used to keep prepared foods fresh. It can cause breathing difficulties in those sensitive to the ingredient."
+  },
+  {
+    "id": 3,
+    "name": ["azodicarbonamide"],
+    "category": "Food Additive",
+    "risk": "Used in bagels and buns. It can cause asthma."
+  },
+  {
+    "id": 4,
+    "name": ["potassium bromate"],
+    "category": "Food Additive",
+    "risk": "Added to breads to increase volume. Linked to cancer in humans."
+  },
+  {
+    "id": 5,
+    "name": ["propyl gallate"],
+    "category": "Food Additive",
+    "risk": "Added to fat-containing products. Linked to cancer in humans."
+  },
+  {
+    "id": 6,
+    "name": ["bha", "bht"],
+    "category": "Food Additive",
+    "risk": "A fat preservative, used in foods to extend shelf life. Linked to cancerous tumor growth."
+  },
+  {
+    "id": 7,
+    "name": ["propylene glycol"],
+    "category": "Food Additive",
+    "risk": "Better known as antifreeze. It thickens dairy products and salad dressing. Deemed 'generally' safe by FDA."
+  },
+  {
+    "id": 8,
+    "name": ["butane"],
+    "category": "Food Additive",
+    "risk": "Added to chicken nuggets to keep them tasting fresh. A known carcinogen."
+  },
+  {
+    "id": 9,
+    "name": ["monosodium glutamate", "msg"],
+    "category": "Food Additive",
+    "risk": "Flavor enhancer that can cause headaches. Linked in animal studies to nerve damage, heart problems and seizures."
+  },
+  {
+    "id": 10,
+    "name": ["disodium inosinate"],
+    "category": "Food Additive",
+    "risk": "In snack foods. Contains MSG."
+  },
+  {
+    "id": 11,
+    "name": ["disodium guanylate"],
+    "category": "Food Additive",
+    "risk": "Also used in snack foods, and contains MSG."
+  },
+  {
+    "id": 12,
+    "name": ["enriched flour"],
+    "category": "Food Additive",
+    "risk": "Used in many snack foods. A refined starch that is made from toxic ingredients."
+  },
+  {
+    "id": 13,
+    "name": ["recombinant bovine growth hormone", "rbgh"],
+    "category": "Food Additive",
+    "risk": "Geneticially-engineered growth hormone given to cows to boost milk production. It contains high levels of IGF-1, which can cause various types of cancer."
+  },
+  {
+    "id": 14,
+    "name": ["refined vegetable oil", "soybean oil", "corn oil", "safflower oil", "canola oil", "peanut oil"],
+    "category": "Food Additive",
+    "risk": "Used in many packaged foods and snacks. High in omega-6 fats, which are thought to cause heart disease and cancer."
+  },
+  {
+    "id": 15,
+    "name": ["trans fats from partially hydrogenated oils", "pho"],
+    "category": "Food Additive",
+    "risk": "Added to enhance flavor, texture and shelf-life food. It can increase bad cholesterol and diabetes."
+  },
+  {
+    "id": 16,
+    "name": ["sodium benzoate"],
+    "category": "Food Additive",
+    "risk": "Used as a preservative in salad dressing and carbonated beverages. A known carcinogen that can cause cancer and damage human DNA."
+  },
+  {
+    "id": 17,
+    "name": ["brominated vegetable oil"],
+    "category": "Food Additive",
+    "risk": "Keeps flavor oils in soft drinks suspended. Bromate is a poison and can cause organ damage and birth defects. Not required to be listed on food labels."
+  },
+  {
+    "id": 18,
+    "name": ["propyl gallate"],
+    "category": "Food Additive",
+    "risk": "Found in meats, popcorn, soup mixes and frozen dinners. Shown to cause cancer in rats. Banned in some countries. Deemed safe by FDA."
+  },
+  {
+    "id": 19,
+    "name": ["olestra"],
+    "category": "Food Additive",
+    "risk": "Fat-like substance that is unabsorbed by the body. Used in place of natural fats in some snack foods. It can cause digestive problems, and heart problems."
+  },
+  {
+    "id": 20,
+    "name": ["carrageenan"],
+    "category": "Food Additive",
+    "risk": "Stabilizer and thickening agent used in many packaged foods. It can cause ulcers and cancer."
+  },
+  {
+    "id": 21,
+    "name": ["polysorbate 60"],
+    "category": "Food Additive",
+    "risk": "A thickener that is used in baked goods. It can cause cancer in laboratory animals."
+  },
+  {
+    "id": 22,
+    "name": ["polysorbate 80", "ps80"],
+    "category": "Food Additive",
+    "risk": "A synthetic emulsifier in desserts, salad dressing and sauces. It is linked to gut inflammation and increased risk of autoimmune diseases."
+  },
+  {
+    "id": 23,
+    "name": ["camauba wax"],
+    "category": "Food Additive",
+    "risk": "Used in chewing gums and to glaze certain foods. It can cause cancer and tumors."
+  },
+  {
+    "id": 24,
+    "name": ["magnesium sulphate"],
+    "category": "Food Additive",
+    "risk": "Added to tofu and other foods and can cause cancer in laboratory animals."
+  },
+  {
+    "id": 25,
+    "name": ["chlorine dioxide"],
+    "category": "Food Additive",
+    "risk": "Used in bleaching flour. It can cause tumors and hyperactivity in children."
+  },
+  {
+    "id": 26,
+    "name": ["paraben"],
+    "category": "Food Additive",
+    "risk": "Used to stop mold and yeast forming in foods. It can disrupt hormones in the body and is linked to breast cancer."
+  },
+  {
+    "id": 27,
+    "name": ["sodium carboxymethyl cellulose"],
+    "category": "Food Additive",
+    "risk": "Used as a thickener in salad dressings. It can cause cancer when consumed in high quantities."
+  },
+  {
+    "id": 28,
+    "name": ["aluminum"],
+    "category": "Food Additive",
+    "risk": "A preservative in some packaged foods that can cause cancer."
+  },
+  {
+    "id": 29,
+    "name": ["titanium dioxide"],
+    "category": "Food Additive",
+    "risk": "A chemical element used to smoothen texture and brighten colors in foods and drinks. It can cause potential damages to DNA in humans."
+  },
+  {
+    "id": 30,
+    "name": ["saccharin"],
+    "category": "Artificial Sweetener",
+    "risk": "Carcinogen found to cause bladder cancer in rats."
+  },
+  {
+    "id": 31,
+    "name": ["aspartame"],
+    "category": "Artificial Sweetener",
+    "risk": "An excitotoxin that is understood to be a carcinogen. It can cause dizziness, headaches, blurred vision and stomach problems."
+  },
+  {
+    "id": 32,
+    "name": ["high fructose corn syrup", "hfcs"],
+    "category": "Artificial Sweetener",
+    "risk": "Sweetener made into a corn starch from genetically modified corn. It causes obesity, diabetes, heart problems, arthritis and insulin resistance."
+  },
+  {
+    "id": 33,
+    "name": ["xylitol"],
+    "category": "Artificial Sweetener",
+    "risk": "Added to food as a sugar alcohol. It can cause digestive discomfort like bloating, gas, etc., and increase the risk of cardiovascular health problems."
+  },
+  {
+    "id": 34,
+    "name": ["acesulfame potassium"],
+    "category": "Artificial Sweetener",
+    "risk": "Used with other artificial sweeteners in diet sodas and ice cream. It is linked to lung and breast tumors in rats."
+  },
+  {
+    "id": 35,
+    "name": ["sucralose"],
+    "category": "Artificial Sweetener",
+    "risk": "It is artificial sweetener in Splenda. It can cause swelling of liver and kidneys and a shrinkage of the thymus gland."
+  },
+  {
+    "id": 36,
+    "name": ["agave nectar"],
+    "category":"Artificial Sweetener",
+    "risk": "Sweetener derived from a cactus. It contains high levels of fructose, which causes insulin resistance, liver disease and inflammation of body tissues."
+  },
+  {
+    "id": 37,
+    "name": ["bleached starch"],
+    "category": "Artificial Sweetener",
+    "risk": "Added to many dairy products. It can cause asthma and skin irritations."
+  },
+  {
+    "id": 38,
+    "name": ["tert butylhydroquinone"],
+    "category": "Artificial Sweetener",
+    "risk": "Used to preserve fish products. It can cause stomach tumors."
+  },
+  {
+    "id": 39,
+    "name": ["red #40"],
+    "category": "Artificial Food Color",
+    "risk": "Found in many foods to alter color. A carcinogen that is linked to cancer in some studies. Also, it can cause hyperactivity in children. Banned in some European countries."
+  },
+  {
+    "id": 40,
+    "name": ["blue #1"],
+    "category": "Artificial Food Color",
+    "risk": "Used in bakery products, candy and soft drinks. It can damage chromosomes and lead to cancer."
+  },
+  {
+    "id": 41,
+    "name": ["blue #2"],
+    "category": "Artificial Food Color",
+    "risk": "Used in candy and pet food beverages. It can cause brain tumors."
+  },
+  {
+    "id": 42,
+    "name": ["citrus red #1"],
+    "category": "Artificial Food Color",
+    "risk": "Sprayed on oranges to make them look ripe. It can damage chromosomes and lead to cancer."
+  },
+  {
+    "id": 43,
+    "name": ["citrus red #2"],
+    "category": "Artificial Food Color",
+    "risk": "Used to color oranges. It can cause cancer if you eat the peel."
+  },
+  {
+    "id": 44,
+    "name": ["green #3"],
+    "category": "Artificial Food Color",
+    "risk": "Used in candy and beverages. It can cause bladder tumors."
+  },
+  {
+    "id": 45,
+    "name": ["yellow #5", "yellow tartrazine", "e102"],
+    "category": "Artificial Food Color",
+    "risk": "Used in desserts, candy and baked goods. It can cause kidney tumors, according to some studies."
+  },
+  {
+    "id": 46,
+    "name": ["yellow #6", "e110"],
+    "category": "Artificial Food Color",
+    "risk": "A carcinogen used in sausage, beverages and baked goods. It can cause kidney tumors, according to some studies."
+  },
+  {
+    "id": 47,
+    "name": ["red #2"],
+    "category": "Artificial Food Color",
+    "risk": "A food coloring that can cause both asthma and cancer."
+  },
+  {
+    "id": 48,
+    "name": ["red #3"],
+    "category": "Artificial Food Color",
+    "risk": "A carcinogen. that is added to cherry pie filling, ice cream and baked goods. It can cause nerve damage and thyroid cancer."
+  },
+  {
+    "id": 49,
+    "name": ["caramel coloring"],
+    "category": "Artificial Food Color",
+    "risk": "In soft drinks, sauces, pastries and breads. When made with ammonia, it can cause cancer in mice. Yet, food companies are not required to disclose if this ingredient is made with ammonia."
+  },
+  {
+    "id": 50,
+    "name": ["brown ht"],
+    "category": "Artificial Food Color",
+    "risk": "Used in many packaged foods. It can cause hyperactivity in children, asthma and cancer."
+  },
+  {
+    "id": 51,
+    "name": ["orange b"],
+    "category":"Artificial Food Color",
+    "risk": "A food dye that is used in hot dog and sausage casings. It can cause liver problems and challenges for the bile duct."
+  },
+  {
+    "id": 52,
+    "name": ["bixin"],
+    "category": "Artificial FoodColor",
+    "risk": "Food coloring that can cause hyperactivity and asthma in children."
+  },
+  {
+    "id": 53,
+    "name": ["norbixin"],
+    "category": "Artificial Food Color",
+    "risk": "Food coloring that can cause hyperactivity and asthma in children."
+  },
+  {
+    "id": 54,
+    "name": ["annatto"],
+    "category": "Artificial Food Color",
+    "risk": "Food coloring that can cause hyperactivity and asthma in children."
+  },
+  {
+    "id": 55,
+    "name": ["caramelized sugar syrup"],
+    "category": "Artificial Food Color",
+    "risk": "It can contribute to obesity, type 2 diabetes and heart disease. Linked to a potential carcinogen, 4-MEI, and cancer in animal studies."
+  },
+  {
+    "id": 56,
+    "name": ["sodium benzoate"],
+    "category": "Preservative",
+    "risk": "A salt of benzoic acid added to extend shelf life of food and drinks products. It can cause hyperactivity in some children."
+  },
+  {
+    "id": 57,
+    "name": ["sodium nitrate", "sodium nitrite"],
+    "category": "Preservative",
+    "risk": "Added to preserve meat products. Consumption of high quantity can lead to possible heart palpitations, dyspnea and pancreatic cancer."
+  },
+  {
+    "id": 58,
+    "name": ["sodium sulfite", "e221"],
+    "category": "Preservative",
+    "risk": "Added to preserve some wine and some dried fruits. Sulfite is linked to asthma, headaches, breathing problems, rashes and cardiac arrest."
+  },
+  {
+    "id": 59,
+    "name": ["sulfur dioxide", "e220"],
+    "category": "Preservative",
+    "risk": "Added to food and drinks and labeled as toxic. It can cause bronchial problems, flushing, tingling sensations or anaphylactic shock."
+  },
+  {
+    "id": 60,
+    "name": ["potassium bisulfite", "khso3"],
+    "category": "Preservative",
+    "risk": "It is a sulfurous acid used to preserve wine, beers, fruits and dehydrated vegetables. It can cause asthma symptoms, weakness, etc."
+  },
+  {
+    "id": 61,
+    "name": ["propyl paraben"],
+    "category": "Preservative",
+    "risk": "It is used in many food products and cosmetics. It is reported as an endocrine-disrupting chemical that can decrease sperm counts and testosterone levels, impair fertility in women and breast growth, and can cause cancer."
+  },
+  {
+    "id": 62,
+    "name": ["butylated hydroxyanisole", "bha", "butylated hydroxytoluene", "bht", "e320"],
+    "category": "Preservative",
+    "risk": "Added to maintain flavor and color of foods. It can cause neurological problems, and as oxidants, have the potential to cause cancer."
+  },
+  {
+    "id": 63,
+    "name": ["tertiary butylhydroquinone", "tbhq"],
+    "category": "Preservative",
+    "risk": "This synthetic antioxidant is used to preserve shelf life and prevent rancidity in foods. It can cause cellular damage and cancer."
+  }
+]
