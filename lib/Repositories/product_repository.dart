@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -13,6 +14,7 @@ import '../Model/analysis_model.dart';
 import '../Model/knowledge_base_item.dart';
 import '../Model/product.dart';
 import '../supabase_config.dart';
+import '../Utils/encoding_utils.dart';
 
 class ProductRepository {
   // This field is reserved for API calls (e.g., Gemini/OpenAI) in other
@@ -213,8 +215,16 @@ class ProductRepository {
       // 🔒 IMPORTANT: Never hardcode API keys in a production app.
       // This is for demonstration purposes only. For a real app, use a secure
       // backend proxy or retrieve the key from encrypted storage or environment variables.
-      // const apiKey = 'AIzaSyBWo3Icp5qEjEOWDhYfqVwSGJtvUM2ytio';
-      const apiKey = 'AIzaSyDh8VvX8EQZc1GwhDY83mc1mTfBphGNRM4';
+      final encodedApiKey = dotenv.env['GEMINI_API_KEY'] ?? '';
+
+      if (encodedApiKey.isEmpty) {
+        return ApiResponse.error(
+          'API key not found. Please check your .env file.',
+        );
+      }
+
+      // Decode the base64 encoded API key
+      final apiKey = EncodingUtils.decodeFromBase64(encodedApiKey);
 
       // 2. Initialize the Gemini Model
       final model = GenerativeModel(
@@ -1009,7 +1019,11 @@ Respond ONLY with a valid JSON object. The JSON structure MUST be:
         'ingredients_list': productData['ingredientsList'], // JSONB field
       };
 
-      final response = await SupabaseConfig.client.from('products').insert(insertData).select();
+      final response =
+          await SupabaseConfig.client
+              .from('products')
+              .insert(insertData)
+              .select();
 
       if (response.isNotEmpty) {
         final createdProduct = Product.fromJson(response[0]);
@@ -1043,15 +1057,21 @@ Respond ONLY with a valid JSON object. The JSON structure MUST be:
   }
 
   // Supabase: update product favorite status
-  Future<ApiResponse<void>> updateProductFavorite(String productId, bool isFavorite) async {
+  Future<ApiResponse<void>> updateProductFavorite(
+    String productId,
+    bool isFavorite,
+  ) async {
     try {
-      print('🔄 Updating favorite status for product $productId to $isFavorite');
-      
-      final response = await SupabaseConfig.client
-          .from('products')
-          .update({'is_favorite': isFavorite})
-          .eq('id', productId)
-          .select();
+      print(
+        '🔄 Updating favorite status for product $productId to $isFavorite',
+      );
+
+      final response =
+          await SupabaseConfig.client
+              .from('products')
+              .update({'is_favorite': isFavorite})
+              .eq('id', productId)
+              .select();
 
       print('✅ Favorite update successful: $response');
       return ApiResponse.success(null);
