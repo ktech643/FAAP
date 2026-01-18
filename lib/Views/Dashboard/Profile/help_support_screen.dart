@@ -73,7 +73,7 @@ class HelpSupportScreen extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.all(16.w),
                       child: Text(
-                        'To scan a product, tap the \'Scan\' icon in the bottom navigation bar. Hold your phone\'s camera over the product\'s barcode until it\'s recognized. The app will then display information about the product\'s ingredients and additives.',
+                        'To scan a product, tap the \'Scan\' icon in the bottom navigation bar. Hold your phone\'s camera over the product\'s label to analyze ingredients. The app will then display information about the product\'s ingredients and additives.',
                         style: GoogleFonts.inter(
                           fontSize: 14.sp,
                           color: AppColors.textSecondary,
@@ -149,7 +149,7 @@ class HelpSupportScreen extends StatelessWidget {
                   context,
                   icon: Icons.email,
                   title: 'Email Support',
-                  subtitle: 'support@additivechecker.app',
+                  subtitle: 'faapscan@chassinc.org',
                   onTap:
                       () => ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Email Support tapped')),
