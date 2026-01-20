@@ -56,7 +56,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   final GoogleSignIn _googleSignInInstance = GoogleSignIn(
     scopes: ['email', 'profile'],
     serverClientId:
-        "1021262745107-p7ui0rohkehjqtf2t6ufh7m5hceusue5.apps.googleusercontent.com",
+        "1021262745107-672bipo2hsecgnrbgjiqe9fsrprkbvrr.apps.googleusercontent.com",
   );
 
   AuthNotifier() : super(const AuthState()) {
