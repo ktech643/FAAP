@@ -13,13 +13,13 @@ class OnBoardingController {
     {
       'title': 'Discover the Truth Behind Your Food',
       'subtitle':
-          'Scan barcodes to instantly identify harmful additives and make healthier choices.',
+          'Scan product to instantly identify harmful additives and make healthier choices.',
       'image':
           'https://lh3.googleusercontent.com/aida-public/AB6AXuDOry9aIpHLKHgx9ojf0wx30pGpLp0VGZG56sGnynGxJUpEp_imw3XAoMbSYAGVh8Ub1khW4dDjy7p8JMKHYGpTjiG8EqBfkeUP31y4gJy-4fyriCBLnGLlQhAHkf_dP7dzQF9qas9Y-OeFYACF_aTM_IATavoG9SiabMCIKFFOwOlqU83LxYrwjpGkHuCe9bd3RZpm-kgVUUEdVX-SqXVPRsrx32XaYKw7r0vzqoXlOwwthkfmHYQxDcSxsdmfDz1HdHqLBFLCu4mE',
     },
     {
       'title': 'Scan Easily and Quickly',
-      'subtitle': 'Point your camera at any barcode and get instant results.',
+      'subtitle': 'Point your camera at any product and get instant results.',
       'image':
           'https://lh3.googleusercontent.com/aida-public/AB6AXuDOry9aIpHLKHgx9ojf0wx30pGpLp0VGZG56sGnynGxJUpEp_imw3XAoMbSYAGVh8Ub1khW4dDjy7p8JMKHYGpTjiG8EqBfkeUP31y4gJy-4fyriCBLnGLlQhAHkf_dP7dzQF9qas9Y-OeFYACF_aTM_IATavoG9SiabMCIKFFOwOlqU83LxYrwjpGkHuCe9bd3RZpm-kgVUUEdVX-SqXVPRsrx32XaYKw7r0vzqoXlOwwthkfmHYQxDcSxsdmfDz1HdHqLBFLCu4mE',
     },
@@ -46,7 +46,7 @@ class OnBoardingController {
       // Mark onboarding as completed
       await UserPreferencesService.setOnboardingCompleted(true);
       print('✅ Onboarding completed - showing notification screen');
-      
+
       navigatorKey.currentState!.pushReplacement(
         MaterialPageRoute(builder: (_) => const NotificationScreen()),
       );
@@ -57,7 +57,7 @@ class OnBoardingController {
     // Mark onboarding as completed even when skipped
     await UserPreferencesService.setOnboardingCompleted(true);
     print('⏭️ Onboarding skipped - showing notification screen');
-    
+
     navigatorKey.currentState!.pushReplacement(
       MaterialPageRoute(builder: (_) => const NotificationScreen()),
     );
