@@ -1,5 +1,7 @@
 import 'package:faap/UI Helper/colors.dart';
 import 'package:faap/UI Helper/custom_appbar.dart';
+import 'package:faap/Views/Dashboard/Profile/webview_screen.dart';
+import 'package:faap/Services/email_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -73,11 +75,12 @@ class HelpSupportScreen extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.all(16.w),
                       child: Text(
-                        'To scan a product, tap the \'Scan\' icon in the bottom navigation bar. Hold your phone\'s camera over the product\'s label to analyze ingredients. The app will then display information about the product\'s ingredients and additives.',
+                        'For the best and most accurate results, scan the ‘ingredients label’ on the product. To scan, tap the ‘Scan’ icon in the bottom navigation bar. Point your phone’s camera at the product’s ingredients label (where ingredients are listed in text). Hold your phone’s steady and ensure the text is clearly visible. The app will instantly analyze additives and preservatives used in the product and identify harmful ingredients that are associated with health concerns.',
                         style: GoogleFonts.inter(
                           fontSize: 14.sp,
                           color: AppColors.textSecondary,
                         ),
+                        textAlign: TextAlign.justify,
                       ),
                     ),
                   ],
@@ -151,8 +154,10 @@ class HelpSupportScreen extends StatelessWidget {
                   title: 'Email Support',
                   subtitle: 'faapscan@chassinc.org',
                   onTap:
-                      () => ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Email Support tapped')),
+                      () => EmailService.launchEmail(
+                        context,
+                        email: 'faapscan@chassinc.org',
+                        subject: 'FAAP Support Request',
                       ),
                 ),
                 SizedBox(height: 12.h),
@@ -173,13 +178,19 @@ class HelpSupportScreen extends StatelessWidget {
                   context,
                   icon: Icons.language,
                   title: 'Visit Our Website',
-                  subtitle: 'additivechecker.app',
-                  onTap:
-                      () => ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Visit Our Website tapped'),
-                        ),
+                  subtitle: 'www.faapscan.chassinc.org',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder:
+                            (context) => const WebViewScreen(
+                              title: 'FAAP Scan',
+                              url: 'https://faapscan.chassinc.org/',
+                            ),
                       ),
+                    );
+                  },
                 ),
               ],
             ),

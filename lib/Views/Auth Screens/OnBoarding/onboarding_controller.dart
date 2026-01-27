@@ -13,20 +13,20 @@ class OnBoardingController {
     {
       'title': 'Discover the Truth Behind Your Food',
       'subtitle':
-          'Scan product to instantly identify harmful additives and make healthier choices.',
+          'Point your camera at the product label to get instant analysis of listed ingredients. Tip: For best results, scan product’s ingredients label rather than the barcode.',
       'image':
           'https://lh3.googleusercontent.com/aida-public/AB6AXuDOry9aIpHLKHgx9ojf0wx30pGpLp0VGZG56sGnynGxJUpEp_imw3XAoMbSYAGVh8Ub1khW4dDjy7p8JMKHYGpTjiG8EqBfkeUP31y4gJy-4fyriCBLnGLlQhAHkf_dP7dzQF9qas9Y-OeFYACF_aTM_IATavoG9SiabMCIKFFOwOlqU83LxYrwjpGkHuCe9bd3RZpm-kgVUUEdVX-SqXVPRsrx32XaYKw7r0vzqoXlOwwthkfmHYQxDcSxsdmfDz1HdHqLBFLCu4mE',
     },
     {
       'title': 'Scan Easily and Quickly',
-      'subtitle': 'Point your camera at any product and get instant results.',
+      'subtitle': 'Scan the ingredients label to instantly identify harmful additives and make healthier choices.',
       'image':
           'https://lh3.googleusercontent.com/aida-public/AB6AXuDOry9aIpHLKHgx9ojf0wx30pGpLp0VGZG56sGnynGxJUpEp_imw3XAoMbSYAGVh8Ub1khW4dDjy7p8JMKHYGpTjiG8EqBfkeUP31y4gJy-4fyriCBLnGLlQhAHkf_dP7dzQF9qas9Y-OeFYACF_aTM_IATavoG9SiabMCIKFFOwOlqU83LxYrwjpGkHuCe9bd3RZpm-kgVUUEdVX-SqXVPRsrx32XaYKw7r0vzqoXlOwwthkfmHYQxDcSxsdmfDz1HdHqLBFLCu4mE',
     },
     {
       'title': 'Make Informed Choices',
       'subtitle':
-          'Choose healthier options based on detailed ingredient analysis.',
+          'View a detailed breakdown of additives and preservatives used in the product and choose healthier options.',
       'image':
           'https://lh3.googleusercontent.com/aida-public/AB6AXuDOry9aIpHLKHgx9ojf0wx30pGpLp0VGZG56sGnynGxJUpEp_imw3XAoMbSYAGVh8Ub1khW4dDjy7p8JMKHYGpTjiG8EqBfkeUP31y4gJy-4fyriCBLnGLlQhAHkf_dP7dzQF9qas9Y-OeFYACF_aTM_IATavoG9SiabMCIKFFOwOlqU83LxYrwjpGkHuCe9bd3RZpm-kgVUUEdVX-SqXVPRsrx32XaYKw7r0vzqoXlOwwthkfmHYQxDcSxsdmfDz1HdHqLBFLCu4mE',
     },
