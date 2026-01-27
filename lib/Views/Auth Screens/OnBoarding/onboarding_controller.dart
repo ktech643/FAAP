@@ -19,7 +19,8 @@ class OnBoardingController {
     },
     {
       'title': 'Scan Easily and Quickly',
-      'subtitle': 'Scan the ingredients label to instantly identify harmful additives and make healthier choices.',
+      'subtitle':
+          'Scan the ingredients label to instantly identify harmful additives and make healthier choices.',
       'image':
           'https://lh3.googleusercontent.com/aida-public/AB6AXuDOry9aIpHLKHgx9ojf0wx30pGpLp0VGZG56sGnynGxJUpEp_imw3XAoMbSYAGVh8Ub1khW4dDjy7p8JMKHYGpTjiG8EqBfkeUP31y4gJy-4fyriCBLnGLlQhAHkf_dP7dzQF9qas9Y-OeFYACF_aTM_IATavoG9SiabMCIKFFOwOlqU83LxYrwjpGkHuCe9bd3RZpm-kgVUUEdVX-SqXVPRsrx32XaYKw7r0vzqoXlOwwthkfmHYQxDcSxsdmfDz1HdHqLBFLCu4mE',
     },
