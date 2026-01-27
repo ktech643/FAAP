@@ -21,7 +21,7 @@ class NotificationsScreen extends StatelessWidget {
       },
       {
         'title': 'New Feature Available',
-        'message': 'Check out the new barcode scanning feature in the app.',
+        'message': 'Check out the new product scanning feature in the app.',
         'time': '1 day ago',
         'icon': Icons.star,
         'isRead': false,
