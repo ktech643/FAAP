@@ -53,6 +53,20 @@ class SignUpController {
     return error == null; // Return true if there was no error
   }
 
+  /// Sign up using Google. Returns true on success.
+  Future<bool> signUpWithGoogle() async {
+    // Clear previous errors
+    _ref.read(authProvider.notifier).clearError();
+    return await _ref.read(authProvider.notifier).signInWithGoogle();
+  }
+
+  /// Sign up using Apple ID. Returns true on success.
+  Future<bool> signUpWithApple() async {
+    // Clear previous errors
+    _ref.read(authProvider.notifier).clearError();
+    return await _ref.read(authProvider.notifier).signInWithApple();
+  }
+
   bool isValidEmail(String email) {
     return RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email);
   }

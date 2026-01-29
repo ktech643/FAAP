@@ -3,6 +3,7 @@ import 'dart:io' show Platform;
 import 'package:faap/UI Helper/Buttons/primary_button.dart';
 import 'package:faap/UI Helper/custom_message/custom_toast.dart';
 import 'package:faap/UI Helper/inputfields.dart';
+import 'package:faap/UI%20Helper/Buttons/social_button.dart';
 import 'package:faap/Views/Dashboard/Profile/webview_screen.dart';
 import 'package:faap/main.dart';
 import 'package:flutter/gestures.dart';
@@ -12,6 +13,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../Provider/auth_provider.dart';
+import '../OnBoarding/UI/onboarding_view.dart';
+import '../Provider/universal_provider.dart';
 import '../Signin/signinscreen.dart';
 import 'signup_controller.dart';
 
@@ -22,6 +25,7 @@ class SignUpScreenView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final signUpController = ref.watch(signUpControllerProvider);
     final authState = ref.watch(authProvider);
+    final isSocialLoading = ref.watch(universalLoadingProvider);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -131,18 +135,23 @@ class SignUpScreenView extends ConsumerWidget {
                                   color: const Color(0xFF22c55e), // primary
                                   decoration: TextDecoration.underline,
                                 ),
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => const WebViewScreen(
-                                          title: 'Terms & Conditions',
-                                          url: 'http://faapscan.chassinc.org/terms.html',
-                                        ),
-                                      ),
-                                    );
-                                  },
+                                recognizer:
+                                    TapGestureRecognizer()
+                                      ..onTap = () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder:
+                                                (
+                                                  context,
+                                                ) => const WebViewScreen(
+                                                  title: 'Terms & Conditions',
+                                                  url:
+                                                      'http://faapscan.chassinc.org/terms.html',
+                                                ),
+                                          ),
+                                        );
+                                      },
                               ),
                               TextSpan(
                                 text: ' and ',
@@ -159,18 +168,23 @@ class SignUpScreenView extends ConsumerWidget {
                                   color: const Color(0xFF22c55e), // primary
                                   decoration: TextDecoration.underline,
                                 ),
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => const WebViewScreen(
-                                          title: 'Privacy Policy',
-                                          url: 'http://faapscan.chassinc.org/privacy.html',
-                                        ),
-                                      ),
-                                    );
-                                  },
+                                recognizer:
+                                    TapGestureRecognizer()
+                                      ..onTap = () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder:
+                                                (
+                                                  context,
+                                                ) => const WebViewScreen(
+                                                  title: 'Privacy Policy',
+                                                  url:
+                                                      'http://faapscan.chassinc.org/privacy.html',
+                                                ),
+                                          ),
+                                        );
+                                      },
                               ),
                             ],
                           ),
@@ -266,72 +280,70 @@ class SignUpScreenView extends ConsumerWidget {
                       ),
                       SizedBox(height: 24.h),
                       // Platform-specific social button
-                      if (Platform.isAndroid)
-                        OutlinedButton(
-                          onPressed: () {},
-                          style: OutlinedButton.styleFrom(
-                            side: const BorderSide(
-                              color: Color(0xFFd1d5db),
-                            ), // gray-300
-                            backgroundColor: Colors.white,
-                            padding: EdgeInsets.symmetric(vertical: 12.h),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.r),
+                      Row(
+                        children: [
+                          if (Platform.isAndroid)
+                            SocialButton(
+                              type: SocialButtonType.google,
+                              isLoading: authState.isGoogleLoading,
+                              onPressed: () async {
+                                final success =
+                                    await signUpController.signUpWithGoogle();
+                                if (success && context.mounted) {
+                                  Toast.success(
+                                    context: context,
+                                    message: 'Signed up successfully',
+                                  );
+                                  Future.delayed(
+                                    const Duration(seconds: 1),
+                                    () {
+                                      if (context.mounted) {
+                                        navigatorKey.currentState!
+                                            .pushReplacement(
+                                              MaterialPageRoute(
+                                                builder:
+                                                    (_) =>
+                                                        const OnBoardingView(),
+                                              ),
+                                            );
+                                      }
+                                    },
+                                  );
+                                }
+                              },
                             ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                'assets/Icons/googleicon.png',
-                                height: 24,
-                                width: 24,
-                              ),
-                              SizedBox(width: 12.w),
-                              Text(
-                                'Sign up with Google',
-                                style: GoogleFonts.inter(
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w600,
-                                  color: const Color(0xFF374151), // gray-700
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                      else if (Platform.isIOS)
-                        OutlinedButton(
-                          onPressed: () {},
-                          style: OutlinedButton.styleFrom(
-                            side: const BorderSide(
-                              color: Color(0xFFd1d5db),
-                            ), // gray-300
-                            backgroundColor: Colors.black,
-                            padding: EdgeInsets.symmetric(vertical: 12.h),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.r),
+                          if (Platform.isIOS)
+                            SocialButton(
+                              type: SocialButtonType.apple,
+                              isLoading: authState.isAppleLoading,
+                              onPressed: () async {
+                                final success =
+                                    await signUpController.signUpWithApple();
+                                if (success && context.mounted) {
+                                  Toast.success(
+                                    context: context,
+                                    message: 'Signed up successfully',
+                                  );
+                                  Future.delayed(
+                                    const Duration(seconds: 1),
+                                    () {
+                                      if (context.mounted) {
+                                        navigatorKey.currentState!
+                                            .pushReplacement(
+                                              MaterialPageRoute(
+                                                builder:
+                                                    (_) =>
+                                                        const OnBoardingView(),
+                                              ),
+                                            );
+                                      }
+                                    },
+                                  );
+                                }
+                              },
                             ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                'assets/Icons/apple-logo-white.png',
-                                height: 24,
-                                width: 24,
-                              ),
-                              SizedBox(width: 12.w),
-                              Text(
-                                'Sign up with Apple',
-                                style: GoogleFonts.inter(
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
