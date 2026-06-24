@@ -92,8 +92,9 @@ class ProductsNotifier extends StateNotifier<ApiResponse<List<Product>>> {
           ),
         );
 
-        // Add the scanned product to the products list (persist to Supabase)
-        await addProduct(result.data!);
+        // Edge function automatically saves the product to the database now.
+        // Refresh the local products list from Supabase to show the new scan in history
+        await getProducts();
 
         return ApiResponse.success(result.data);
       } else {
@@ -117,8 +118,9 @@ class ProductsNotifier extends StateNotifier<ApiResponse<List<Product>>> {
           ),
         );
 
-        // Add the scanned product to the products list (persist to Supabase)
-        await addProduct(result.data!);
+        // Edge function automatically saves the product to the database now.
+        // Refresh the local products list from Supabase to show the new scan in history
+        await getProducts();
 
         return ApiResponse.success(result.data!);
       } else {
@@ -180,7 +182,11 @@ class ProductsNotifier extends StateNotifier<ApiResponse<List<Product>>> {
         return;
       }
 
-      state = ApiResponse.loading();
+      // Only show full-screen loading if we don't have any data yet
+      if (state.data == null || state.data!.isEmpty) {
+        state = ApiResponse.loading();
+      }
+      
       final result = await _repository.getAllProducts(email);
       if (result.isSuccess) {
         state = ApiResponse.success(result.data ?? []);
@@ -201,7 +207,11 @@ class ProductsNotifier extends StateNotifier<ApiResponse<List<Product>>> {
         return;
       }
 
-      state = ApiResponse.loading();
+      // Only show full-screen loading if we don't have any data yet
+      if (state.data == null || state.data!.isEmpty) {
+        state = ApiResponse.loading();
+      }
+      
       final result = await _repository.getAllProducts(email);
 
       if (result.isSuccess) {

@@ -69,6 +69,7 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
     final now = DateTime.now();
     final todayProducts = <Product>[];
     final yesterdayProducts = <Product>[];
+    final olderProducts = <Product>[];
 
     for (final p in allProducts) {
       if (_isSameDay(p.createdAt, now)) {
@@ -78,6 +79,8 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
         now.subtract(const Duration(days: 1)),
       )) {
         yesterdayProducts.add(p);
+      } else {
+        olderProducts.add(p);
       }
     }
 
@@ -175,7 +178,43 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
               SizedBox(height: 32.h),
             ],
 
-            if (todayProducts.isEmpty && yesterdayProducts.isEmpty) ...[
+            if (olderProducts.isNotEmpty) ...[
+              Text(
+                'Older',
+                style: GoogleFonts.inter(
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+              SizedBox(height: 16.h),
+              ...olderProducts.map(
+                (product) => Padding(
+                  padding: EdgeInsets.only(bottom: 12.h),
+                  child: ScanItemWidget(
+                    name: product.title,
+                    date:
+                        'Scanned on ${product.createdAt.day}/${product.createdAt.month}/${product.createdAt.year}',
+                    grade: product.status ?? product.riskLevel,
+                    gradeColor: _statusColor(
+                      product.status ?? product.riskLevel,
+                    ),
+                    imageUrl: product.image ?? '',
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProductDetailsScreen(product: product),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+              SizedBox(height: 32.h),
+            ],
+
+            if (todayProducts.isEmpty && yesterdayProducts.isEmpty && olderProducts.isEmpty) ...[
               Center(
                 child: Padding(
                   padding: EdgeInsets.only(top: 48.h),
