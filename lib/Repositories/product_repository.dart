@@ -3,8 +3,9 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import '../Utils/secure_storage_helper.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -14,7 +15,7 @@ import '../Model/analysis_model.dart';
 import '../Model/knowledge_base_item.dart';
 import '../Model/product.dart';
 import '../supabase_config.dart';
-import '../Utils/encoding_utils.dart';
+
 
 class ProductRepository {
   // This field is reserved for API calls (e.g., Gemini/OpenAI) in other
@@ -209,29 +210,17 @@ class ProductRepository {
   Future<ApiResponse<Product>> scanProductGemini(File imageFile) async {
     await initializeKnowledgeBase();
     try {
-      // 1. Read image file as bytes. Base64 is not needed for the Gemini SDK.
-      final Uint8List bytes = await imageFile.readAsBytes();
-
-      // 🔒 IMPORTANT: Never hardcode API keys in a production app.
-      // This is for demonstration purposes only. For a real app, use a secure
-      // backend proxy or retrieve the key from encrypted storage or environment variables.
-      final encodedApiKey = dotenv.env['GEMINI_API_KEY'] ?? '';
-
-      if (encodedApiKey.isEmpty) {
-        return ApiResponse.error(
-          'API key not found. Please check your .env file.',
-        );
+      final user = SupabaseConfig.client.auth.currentUser;
+      if (user == null) {
+        throw Exception("User is not authenticated");
       }
-
-      // Decode the base64 encoded API key
-      final apiKey = EncodingUtils.decodeFromBase64(encodedApiKey);
-
-      // 2. Initialize the Gemini Model
-      final model = GenerativeModel(
-        // 'gemini-1.5-flash-latest' is a fast and capable multimodal model
-        model: 'gemini-2.5-flash',
-        apiKey: apiKey,
-      );
+      
+      print("Uploading image to Supabase Storage...");
+      final imageUrl = await uploadImageToStorage(imageFile, user.id);
+      if (imageUrl == null) {
+        throw Exception("Failed to upload image to storage");
+      }
+      print("Image uploaded successfully: $imageUrl");
 
       // 3. Define the full prompt with the knowledge base embedded.
       const prompt = r'''
@@ -671,23 +660,43 @@ Respond ONLY with a valid JSON object. The JSON structure MUST be:
 }
 ''';
 
-      // 4. Create the content parts for the API request
-      final promptPart = TextPart(prompt);
-      final imagePart = DataPart('image/jpeg', bytes);
+      // 4. Send the request to Supabase Edge Function
+      print("Invoking analyze_product Edge Function...");
+      
+      final token = SupabaseConfig.client.auth.currentSession?.accessToken;
+      if (token == null) {
+        throw Exception("User is not authenticated");
+      }
 
-      // 5. Send the request to Gemini
-      final response = await model.generateContent([
-        Content.multi([promptPart, imagePart]),
-      ]);
+      final dio = Dio();
+      dio.options.connectTimeout = const Duration(seconds: 30);
+      dio.options.receiveTimeout = const Duration(seconds: 60);
+      
+      final response = await dio.post(
+        'https://ndvhoqjuzabfhdqdvrjf.supabase.co/functions/v1/analyze_product',
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+        data: {
+          'prompt': prompt,
+          'imageUrl': imageUrl,
+        },
+      );
+      print("Edge Function returned with status: ${response.statusCode}");
 
-      // 6. Process the response
-      if (response.text != null) {
-        // Clean the response in case the model wraps it in markdown
-        final cleanedJson =
-            response.text!
-                .replaceAll('```json', '')
-                .replaceAll('```', '')
-                .trim();
+      // 5. Process the response
+      if (response.statusCode == 200 && response.data != null) {
+        final data = response.data as Map<String, dynamic>;
+        if (data['result'] != null) {
+          final text = data['result'] as String;
+          // Clean the response in case the model wraps it in markdown
+          final cleanedJson =
+              text.replaceAll('```json', '')
+                  .replaceAll('```', '')
+                  .trim();
 
         // Decode the JSON string into a Dart Map
         final analysisResult = jsonDecode(cleanedJson);
@@ -717,15 +726,20 @@ Respond ONLY with a valid JSON object. The JSON structure MUST be:
         }
 
         return ApiResponse.success(product);
-      } else {
-        // Handle cases where the API returns no text content
-        return ApiResponse.error(
-          'Failed to analyze product: No content in response',
-        );
+        }
       }
+      
+      // Handle cases where the API returns no text content
+      return ApiResponse.error(
+        'Failed to analyze product: No content in response',
+      );
     } catch (e) {
-      // Handle potential errors from the API, network, or JSON parsing
-      return ApiResponse.error('An error occurred: ${e.toString()}');
+      if (e is DioException) {
+        print("DioException in scanProductGemini: ${e.response?.statusCode} - ${e.response?.data}");
+      } else {
+        print("Error in scanProductGemini: $e");
+      }
+      return ApiResponse.error('Failed to scan product. Please try again.');
     }
   }
 
@@ -771,12 +785,22 @@ Respond ONLY with a valid JSON object. The JSON structure MUST be:
   ) async {
     try {
       final bytes = await _loadImageBytesFromPath(pathOrUrl);
-
-      // Reuse existing logic by creating DataPart and sending to Gemini
-      // 🔒 IMPORTANT: Never hardcode API keys in a production app.
-      const apiKey = 'AIzaSyBWo3Icp5qEjEOWDhYfqVwSGJtvUM2ytio';
-
-      final model = GenerativeModel(model: 'gemini-2.5-flash', apiKey: apiKey);
+      final user = SupabaseConfig.client.auth.currentUser;
+      if (user == null) {
+        throw Exception("User is not authenticated");
+      }
+      
+      print("Uploading image from path to Supabase Storage...");
+      // We need to write the bytes to a temporary file because uploadImageToStorage expects a File
+      final tempDir = Directory.systemTemp;
+      final tempFile = File('${tempDir.path}/temp_scan_image.jpg');
+      await tempFile.writeAsBytes(bytes);
+      
+      final imageUrl = await uploadImageToStorage(tempFile, user.id);
+      if (imageUrl == null) {
+        throw Exception("Failed to upload image to storage");
+      }
+      print("Image uploaded successfully: $imageUrl");
 
       const prompt = r'''
 +You are a highly specialized AI assistant with expertise in food science and safety. Your sole function is to analyze the food item(s) in a provided image, identify any potentially harmful substances based on the KNOWLEDGE BASE, and assign both an individual and an overall risk level. You must be precise and adhere strictly to the output format.
@@ -835,19 +859,40 @@ Respond ONLY with a valid JSON object. The JSON structure MUST be:
 +}
 +''';
 
-      final promptPart = TextPart(prompt);
-      final imagePart = DataPart('image/jpeg', bytes);
+      print("Invoking analyze_product Edge Function from path...");
+      
+      final token = SupabaseConfig.client.auth.currentSession?.accessToken;
+      if (token == null) {
+        throw Exception("User is not authenticated");
+      }
 
-      final response = await model.generateContent([
-        Content.multi([promptPart, imagePart]),
-      ]);
-
-      if (response.text != null) {
-        final cleanedJson =
-            response.text!
-                .replaceAll('```json', '')
-                .replaceAll('```', '')
-                .trim();
+      final dio = Dio();
+      dio.options.connectTimeout = const Duration(seconds: 30);
+      dio.options.receiveTimeout = const Duration(seconds: 60);
+      
+      final response = await dio.post(
+        'https://ndvhoqjuzabfhdqdvrjf.supabase.co/functions/v1/analyze_product',
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+        data: {
+          'prompt': prompt,
+          'imageUrl': imageUrl,
+        },
+      );
+      print("Edge Function returned with status: ${response.statusCode}");
+      
+      if (response.statusCode == 200 && response.data != null) {
+        final data = response.data as Map<String, dynamic>;
+        if (data['result'] != null) {
+          final text = data['result'] as String;
+          final cleanedJson =
+              text.replaceAll('```json', '')
+                  .replaceAll('```', '')
+                  .trim();
         final analysisResult = jsonDecode(cleanedJson);
 
         final Map<String, dynamic> productData = {
@@ -873,13 +918,19 @@ Respond ONLY with a valid JSON object. The JSON structure MUST be:
         }
 
         return ApiResponse.success(product);
-      } else {
-        return ApiResponse.error(
-          'Failed to analyze product: No content in response',
-        );
+        }
       }
+
+      return ApiResponse.error(
+        'Failed to analyze product: No content in response',
+      );
     } catch (e) {
-      return ApiResponse.error('An error occurred: ${e.toString()}');
+      if (e is DioException) {
+        print("DioException in scanProductGeminiFromPath: ${e.response?.statusCode} - ${e.response?.data}");
+      } else {
+        print("Error in scanProductGeminiFromPath: $e");
+      }
+      return ApiResponse.error('Failed to scan product. Please try again.');
     }
   }
 

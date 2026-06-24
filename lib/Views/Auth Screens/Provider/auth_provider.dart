@@ -8,6 +8,7 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../Models/user_model.dart';
+import '../../../Utils/secure_storage_helper.dart';
 import '../../../supabase_config.dart';
 
 final authProvider = StateNotifierProvider<AuthNotifier, AuthState>((ref) {
@@ -96,18 +97,21 @@ class AuthNotifier extends StateNotifier<AuthState> {
     String? phoneNo,
   }) async {
     try {
-      await _supabase.from('profile').insert({
+      await _supabase.from('profile').upsert({
         'id': user.id,
         'email': user.email,
         'full_name': fullName,
         'phone_no': phoneNo,
         'created_at': DateTime.now().toIso8601String(),
-      });
+      }, onConflict: 'email');
     } catch (e) {
       print("Error creating profile: $e");
       throw e;
     }
   }
+
+
+
 
   /// Returns true if a user is currently signed in.
   bool get isUserSignedIn {
@@ -472,6 +476,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     state = state.copyWith(isLoading: true, error: null);
     try {
       await _supabase.auth.signOut();
+      await SecureStorageHelper().deleteGeminiKey();
       state = const AuthState(isLoading: false);
       return true;
     } catch (e) {
@@ -602,6 +607,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
         // Continue even if Google sign out fails
       }
 
+      await SecureStorageHelper().deleteGeminiKey();
       state = const AuthState(isLoading: false);
       return true;
     } catch (e) {

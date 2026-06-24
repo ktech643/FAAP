@@ -1,9 +1,12 @@
+import 'dart:convert';
 import 'dart:typed_data' show Uint8List;
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:google_generative_ai/google_generative_ai.dart';
 
 import '../Model/analysis_model.dart';
+import '../Utils/secure_storage_helper.dart';
+import '../supabase_config.dart';
 import 'api_service_interface.dart';
 
 class ApiService implements ApiServiceInterface {
@@ -12,8 +15,6 @@ class ApiService implements ApiServiceInterface {
   // Base URLs
   final String baseUrl = 'https://api.example.com/v1';
 
-  static const String _aiApiKey =
-      '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';
 
   ApiService() {
     _dio.options.baseUrl = baseUrl;
@@ -24,37 +25,33 @@ class ApiService implements ApiServiceInterface {
       'Accept': 'application/json',
     };
 
-    _dio.interceptors.add(
-      LogInterceptor(
-        request: true,
-        requestHeader: true,
-        requestBody: true,
-        responseHeader: true,
-        responseBody: true,
-        error: true,
-      ),
-    );
+
   }
 
   static Future<FoodProductAnalysis> analyzeImage(Uint8List imageBytes) async {
     try {
-      final model = GenerativeModel(
-        model: 'gemini-1.5-flash-latest',
-        apiKey: _aiApiKey,
+      final prompt = await _getPrompt();
+      final base64Image = base64Encode(imageBytes);
+
+      final response = await SupabaseConfig.client.functions.invoke(
+        'analyze_product',
+        body: {
+          'prompt': prompt,
+          'imageBase64': base64Image,
+        },
       );
 
-      final prompt = await _getPrompt();
-      final imagePart = DataPart('image/jpeg', imageBytes);
-
-      final response = await model.generateContent([
-        Content.multi([TextPart(prompt), imagePart])
-      ]);
-
-      if (response.text == null) {
+      if (response.status != 200 || response.data == null) {
+        throw Exception('Failed to get a response from the API.');
+      }
+      
+      final data = response.data as Map<String, dynamic>;
+      final responseText = data['result'] as String?;
+      if (responseText == null) {
         throw Exception('Failed to get a response from the API.');
       }
 
-      return foodProductAnalysisFromJson(response.text!);
+      return foodProductAnalysisFromJson(responseText);
     } catch (e) {
       print('Error in analyzeImage: $e');
       rethrow;

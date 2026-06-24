@@ -20,7 +20,7 @@ android {
     namespace = "com.faap.Chassinc"
     // Set to 36 to satisfy newer plugins (camera_android requires compileSdk 36)
     compileSdk = 36
-    ndkVersion = "28.1.13356709"
+    ndkVersion = "28.2.13676358"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11

@@ -43,9 +43,9 @@ void main() {
     expect(restored.description, equals(product.description));
     expect(restored.riskLevel, equals(product.riskLevel));
     expect(restored.isFavorite, equals(product.isFavorite));
-    expect(restored.harmfulIngredients.length, equals(1));
+    expect(restored.harmfulIngredients!.length, equals(1));
     expect(
-      restored.harmfulIngredients.first.ingredientName,
+      restored.harmfulIngredients!.first.ingredientName,
       equals(ingredient.ingredientName),
     );
   });

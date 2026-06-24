@@ -152,7 +152,7 @@ class ProductsNotifier extends StateNotifier<ApiResponse<List<Product>>> {
         final createdProduct = result.data!;
         if (state.data != null) {
           // Replace the product without ID with the one that has ID
-          final updatedProducts = state.data!.map((p) {
+          final updatedProducts = state.data!.map<Product>((p) {
             if (p == product) {
               return createdProduct;
             }
@@ -241,7 +241,7 @@ class ProductsNotifier extends StateNotifier<ApiResponse<List<Product>>> {
       
       // Update local state immediately (optimistic update)
       if (state.data != null) {
-        final updatedProducts = state.data!.map((p) {
+        final updatedProducts = state.data!.map<Product>((p) {
           if (p.id == product.id) {
             p.isFavorite = newFavoriteStatus;
             return p;
@@ -256,7 +256,7 @@ class ProductsNotifier extends StateNotifier<ApiResponse<List<Product>>> {
       if (email.isEmpty) {
         // Revert on error
         if (state.data != null) {
-          final revertedProducts = state.data!.map((p) {
+          final revertedProducts = state.data!.map<Product>((p) {
             if (p.id == product.id) {
               p.isFavorite = product.isFavorite; // Revert to original
               return p;
@@ -276,7 +276,7 @@ class ProductsNotifier extends StateNotifier<ApiResponse<List<Product>>> {
       if (!result.isSuccess) {
         // Revert on error
         if (state.data != null) {
-          final revertedProducts = state.data!.map((p) {
+          final revertedProducts = state.data!.map<Product>((p) {
             if (p.id == product.id) {
               p.isFavorite = product.isFavorite; // Revert to original
               return p;
@@ -292,7 +292,7 @@ class ProductsNotifier extends StateNotifier<ApiResponse<List<Product>>> {
     } catch (e) {
       // Revert on exception
       if (state.data != null) {
-        final revertedProducts = state.data!.map((p) {
+        final revertedProducts = state.data!.map<Product>((p) {
           if (p.id == product.id) {
             p.isFavorite = product.isFavorite; // Revert to original
             return p;
