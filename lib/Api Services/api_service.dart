@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:typed_data' show Uint8List;
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:google_generative_ai/google_generative_ai.dart';
 
 import '../Model/analysis_model.dart';
 import '../Utils/secure_storage_helper.dart';
