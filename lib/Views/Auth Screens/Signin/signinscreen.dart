@@ -25,7 +25,7 @@ class SignInScreenView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = ref.watch(signInControllerProvider);
     final authState = ref.watch(authProvider);
-    final isSocialLoading = ref.watch(universalLoadingProvider);
+    ref.watch(universalLoadingProvider);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,

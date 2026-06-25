@@ -12,4 +12,6 @@ class SupabaseConfig {
       anonKey: supabaseAnonKey,
     );
   }
+
+  static SupabaseClient get client => Supabase.instance.client;
 }
