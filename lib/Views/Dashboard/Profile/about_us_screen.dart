@@ -75,7 +75,7 @@ class AboutUsScreen extends StatelessWidget {
                             Expanded(
                               flex: 2,
                               child: Text(
-                                '0.0.1',
+                                '1.0.5',
                                 style: GoogleFonts.inter(
                                   fontSize: 16.sp,
                                   color: AppColors.textPrimary,

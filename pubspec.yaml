@@ -2,7 +2,7 @@ name: faap
 description: "A new Flutter project."
 publish_to: 'none'
 
-version: 1.0.4+4
+version: 1.0.5+5
 environment:
   sdk: ^3.7.2
 
@@ -25,6 +25,7 @@ dependencies:
 
   riverpod: ^2.6.1
   flutter_riverpod: ^2.6.1
+  google_generative_ai: ^0.4.7
   dio: ^5.9.0
   image_picker: ^1.2.0
   intl: ^0.19.0
@@ -48,7 +49,6 @@ flutter_launcher_icons:
 
 flutter:
   assets:
-
     - assets/Icons/
     - assets/Images/
     - assets/Images/data.json
